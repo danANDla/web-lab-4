@@ -42,7 +42,7 @@ public class PointTableUtil{
         return Collections.emptyList();
     }
 
-    public List<Point> getPointsTable(){
+    public List<Point> getTable(){
         try{
             initconnect();
             List<Point> receviedTable = (List<Point>) em.createQuery("select c from Point c", Point.class).getResultList();

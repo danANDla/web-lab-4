@@ -25,6 +25,20 @@
 </template>
 
 <script>
+async function sendReq(url, params){
+  url = "http://127.0.0.1:8080/web4-1.0" + url;
+  return await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    },
+    body: JSON.stringify(params)
+  }).then(function(response) {
+    return response.json();
+  }).then(function(resp){
+    console.log(resp);
+  });
+}
 import PointTable from "@/Components/point-table";
 import PointForm from "@/Components/point-form";
 export default {
@@ -36,6 +50,11 @@ export default {
   },
   methods:{
     sendData: function (newPoint){
+      sendReq("/root-path/areacheck/parseParams", {
+            x: newPoint.x.toString(),
+            y: newPoint.y.toString(),
+            r: newPoint.r.toString()
+      });
       this.points.push({x: newPoint.x, y: newPoint.y, r: newPoint.r, ishit: newPoint.ishit, time: newPoint.time});
     },
     clearData: function(){
