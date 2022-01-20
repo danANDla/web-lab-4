@@ -3,6 +3,7 @@ package danandla.model.dbutils;
 import danandla.model.entities.Point;
 import danandla.model.entities.mypoint;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -10,6 +11,7 @@ import javax.persistence.Persistence;
 import java.util.Collections;
 import java.util.List;
 
+@Stateless
 public class PointTableUtil{
 
     private EntityManager em;
@@ -25,27 +27,6 @@ public class PointTableUtil{
         em = emf.createEntityManager();
         tr = em.getTransaction();
     }
-//    public PointTableUtil(String tableName) {
-//        super(tableName);
-//    }
-
-//    public void insertPoint(Point newPoint){
-//        try{
-//            initconnect();
-//            super.getTr().begin();
-//            //List<mypoint> array = (List<mypoint>) em.createQuery("SELECT c FROM mypoint c", mypoint.class).getResultList();
-//            //array.add(newpoint);
-//            super.getEm().persist(newPoint);
-//            super.getTr().commit();
-//            super.getEm().close();
-//        }
-//        catch (RuntimeException e){
-//            if(super.getTr().isActive()) super.getTr().rollback(); // TODO error page (DB connect error)
-////            ExternalContext ctxt = FacesContext.getCurrentInstance().getExternalContext();
-////            System.out.println("FacesContext " + ctxt.getRequestContextPath());
-////            ctxt.redirect(ctxt.getRequestContextPath()+"/dberropage.jsf");
-//        }
-//    }
 
     public List<mypoint> getmyointsTable(){
         try{
@@ -107,20 +88,4 @@ public class PointTableUtil{
         }
         return res;
     }
-//    @Override
-//    public void cleartable() {
-//        try{
-//            initconnect();
-//            super.getTr().begin();
-//            super.getEm().createQuery("delete from mypoint c").executeUpdate(); // TODO check for Point.class
-//            super.getTr().commit();
-//            super.getEm().close();
-//        }
-//        catch (RuntimeException e){
-//            if(super.getTr().isActive()) super.getTr().rollback(); // TODO error page (DB connect error)
-////            ExternalContext ctxt = FacesContext.getCurrentInstance().getExternalContext();
-////            System.out.println("FacesContext " + ctxt.getRequestContextPath());
-////            ctxt.redirect(ctxt.getRequestContextPath()+"/dberropage.jsf");
-//        }
-//      }
 }

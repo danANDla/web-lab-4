@@ -6,6 +6,8 @@ import danandla.model.dbutils.PointTableUtil;
 import danandla.model.entities.Point;
 import danandla.model.entities.mypoint;
 
+import javax.ejb.EJB;
+import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -15,14 +17,10 @@ import java.util.Calendar;
 import java.util.List;
 
 @Path("areacheck")
+@ApplicationScoped
 public class PointController {
 
-//    @EJB
-//    PointBean pointBean;
-
-//    @EJB
-//    PointEM pointEM;
-
+    @EJB
     PointTableUtil  pointTableUtil = new PointTableUtil();
 
     @GET
