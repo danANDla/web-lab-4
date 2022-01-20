@@ -45,3 +45,4 @@
  - https://docs.oracle.com/middleware/12211/jdev/user-guide/GUID-5F91CE59-D4DF-4BCD-9D27-632AA83485D4.htm#OJDUG1013
 ### cors
  - https://forum.camunda.org/t/enable-cors-on-wildfly/673/2
+ - https://www.baeldung.com/cors-in-jax-rs
