@@ -20,6 +20,11 @@ public class PointTableUtil{
         em = emf.createEntityManager();
         tr = em.getTransaction();
     }
+    public void initconnectold() throws RuntimeException {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hittableunitOLD");
+        em = emf.createEntityManager();
+        tr = em.getTransaction();
+    }
 //    public PointTableUtil(String tableName) {
 //        super(tableName);
 //    }
@@ -44,7 +49,7 @@ public class PointTableUtil{
 
     public List<mypoint> getmyointsTable(){
         try{
-            initconnect();
+            initconnectold();
             List<mypoint> receviedTable = (List<mypoint>) em.createQuery("select c from mypoint c", mypoint.class).getResultList();
             em.close();
             return receviedTable;
@@ -64,10 +69,27 @@ public class PointTableUtil{
             return receviedTable;
         }
         catch (RuntimeException e){
-            System.out.println("Exception was handled");
+            System.out.println("Exception was handled in the getPointsTable: " + e);
             if(tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
         }
         return Collections.emptyList();
+    }
+
+    public boolean insertPoint(Point newPoint){
+        boolean resp = false;
+        try{
+            initconnect();
+            tr.begin();
+            em.persist(newPoint);
+            tr.commit();
+            em.close();
+            resp = true;
+        }
+        catch (RuntimeException e){
+            System.out.println("Exception was handled in the insertPoint");
+            if(tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
+        }
+        return resp;
     }
 //    @Override
 //    public void cleartable() {

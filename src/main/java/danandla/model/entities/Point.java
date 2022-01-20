@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class Point implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;
 
     @Column(name = "X")
