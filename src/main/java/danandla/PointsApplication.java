@@ -5,5 +5,5 @@ import javax.ws.rs.core.Application;
 
 @ApplicationPath("/root-path")
 public class PointsApplication extends Application {
-    //  he just kept on yoing
+    //  he just kept on yo-ing
 }
