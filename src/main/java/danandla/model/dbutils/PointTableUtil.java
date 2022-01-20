@@ -91,6 +91,22 @@ public class PointTableUtil{
         }
         return resp;
     }
+
+    public boolean clearTable(){
+        boolean res = false;
+        try{
+            initconnect();
+            tr.begin();
+            em.createQuery("delete from Point c", Point.class).executeUpdate();
+            tr.commit();
+            em.close();
+            res = true;
+        }
+        catch (RuntimeException e){
+            if(tr.isActive()) tr.rollback();
+        }
+        return res;
+    }
 //    @Override
 //    public void cleartable() {
 //        try{
