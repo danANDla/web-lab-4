@@ -33,7 +33,7 @@
 
 ---
 ## Helpful links
-###jax-rs examples
+### jax-rs examples
  - https://codedestine.com/jax-rs-produces-restful-web-services/
  - https://www.dokwork.ru/2014/08/restful.html
  - https://learntutorials.net/ru/java-ee/topic/7008/java-restful-web-services--jax-rs-
