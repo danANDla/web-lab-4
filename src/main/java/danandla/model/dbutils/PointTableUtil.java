@@ -1,5 +1,6 @@
 package danandla.model.dbutils;
 
+import danandla.model.entities.Point;
 import danandla.model.entities.mypoint;
 
 import javax.persistence.EntityManager;
@@ -41,7 +42,7 @@ public class PointTableUtil{
 //        }
 //    }
 
-    public List<mypoint> getPointTable(){
+    public List<mypoint> getmyointsTable(){
         try{
             initconnect();
             List<mypoint> receviedTable = (List<mypoint>) em.createQuery("select c from mypoint c", mypoint.class).getResultList();
@@ -55,6 +56,19 @@ public class PointTableUtil{
         return Collections.emptyList();
     }
 
+    public List<Point> getPointsTable(){
+        try{
+            initconnect();
+            List<Point> receviedTable = (List<Point>) em.createQuery("select c from Point c", Point.class).getResultList();
+            em.close();
+            return receviedTable;
+        }
+        catch (RuntimeException e){
+            System.out.println("Exception was handled");
+            if(tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
+        }
+        return Collections.emptyList();
+    }
 //    @Override
 //    public void cleartable() {
 //        try{
