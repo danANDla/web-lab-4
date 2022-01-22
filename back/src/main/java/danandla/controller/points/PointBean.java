@@ -23,18 +23,13 @@ public class PointBean {
 
     public boolean insertPoint(String params){
         LocalDateTime ldt = LocalDateTime.now().plusDays(1);
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL);
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
         String stime = formatter.format(ldt);
-
         JSONObject recieved = new JSONObject(params);
-        Point newPoint = new Point(
-                Float.parseFloat(recieved.getString("x")),
-                Float.parseFloat(recieved.getString("y")),
-                Float.parseFloat(recieved.getString("r")),
-                true,
-                123,
-                stime
-        );
+        float x = Float.parseFloat(recieved.getString("x"));
+        float y = Float.parseFloat(recieved.getString("y"));
+        float r = Float.parseFloat(recieved.getString("r"));
+        Point newPoint = new Point( x, y, r,areaCheck(x,y,r),123, stime);
         return pointTableUtil.insertPoint(newPoint);
     }
 
@@ -44,5 +39,22 @@ public class PointBean {
 
     public void parseParams(String params){
         System.out.println(params);
+    }
+
+    public boolean areaCheck(float x, float y, float r){
+        boolean rect = false;
+        boolean circle = false;
+        boolean triangle = false;
+        float epsilon = 0.000000001f;
+        // in rect
+        rect = ( (x>-r || Math.abs(r + x) <= epsilon) && (x < 0  || Math.abs(x - 0) <= epsilon)
+                && (y < 0 || Math.abs(y - 0) <= epsilon) && (y > -0.5*r || Math.abs(0.5*y + r) <= epsilon) );
+        // in circle
+        circle = ( (r*r >= x*x+y*y || Math.abs(r*r - x*x+y*y) <= epsilon)
+                && (x < 0 || Math.abs(x) <= epsilon) && (y > 0 || Math.abs(y) <= epsilon) );
+        // in triangle
+        triangle = ( (x > 0 || Math.abs(x-0) <= epsilon) && (x < r || Math.abs(x-r) <= epsilon)
+                && (y > 0 || Math.abs(y+0) <= epsilon) && (y < (-0.5*x+0.5*r) || Math.abs(y-(-0.5*x+0.5*r)) <= epsilon) );
+        return (rect || circle || triangle);
     }
 }

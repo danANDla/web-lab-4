@@ -7,17 +7,15 @@
         <td> Y </td>
         <td> R </td>
         <td> sent on </td>
-        <td> is hit</td>
       </tr>
       </thead>
       <tbody id="scrollBody">
       <template v-for="point in points" v-bind:key="point.time">
-        <tr v-bind:class="{'ishit-true': point.ishit, 'ishit-false': !point.ishit}">
+        <tr v-bind:class="{'ishit-true': point.hit, 'ishit-false': !point.hit}">
           <td class="x-clmn">{{point.x}}</td>
           <td class="y-clmn"> {{point.y}}</td>
           <td class="r-clmn">{{point.r}}</td>
           <td class="time-clmn">{{point.stime}}</td>
-          <td class="hit-clmn">{{point.hit}}</td>
         </tr>
       </template>
       </tbody>
@@ -94,7 +92,7 @@ table > tbody > tr.ishit-false {
   background: #ab2a3d;
 }
 
-.x-clmn, .y-clmn, .r-clmn{
+.x-clmn, .y-clmn, .r-clmn, .time-clmn{
   text-align: right;
 }
 </style>
