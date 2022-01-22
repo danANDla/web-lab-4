@@ -1,9 +1,7 @@
 package danandla.controller.points;
 
 import com.google.gson.Gson;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import danandla.model.entities.Point;
-import danandla.model.entities.mypoint;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
@@ -13,7 +11,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.Calendar;
 import java.util.List;
 
 @Path("pointApp")
@@ -52,12 +49,12 @@ public class PointController {
                 .entity(answer).build();
     }
 
-    @GET
+    @POST
     @Path("/add")
-    public Response addPoint(){
-        String stime = Calendar.getInstance().getTime().toString();
-        Point newPoint = new Point(1.0f, 2.0f, 3.0f, true, 123, stime);
-        boolean res = pointBean.insertPoint(newPoint);
+    public Response addPoint(String params){
+//        String stime = Calendar.getInstance().getTime().toString();
+//        Point newPoint = new Point(1.0f, 2.0f, 3.0f, true, 123, stime);
+        boolean res = pointBean.insertPoint(params);
         return Response.status(200)
                .entity(Boolean.toString(res)).build();
     }
@@ -77,11 +74,6 @@ public class PointController {
         pointBean.parseParams(params);
         boolean res = true;
         return Response.status(200)
-//                .header("Access-Control-Allow-Origin", "*")
-//                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-//                .header("Access-Control-Allow-Credentials", "true")
-//                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-//                .header("Access-Control-Max-Age", "1")
                 .entity(Boolean.toString(res)).build();
     }
 }

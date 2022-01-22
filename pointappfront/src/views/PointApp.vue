@@ -49,7 +49,7 @@ export default {
   methods:{
     sendData: function (newPoint){
       console.log("FUNC: Send point")
-      sendReq("/api/pointApp/parseParams", {
+      sendReq("/api/pointApp/add", {
         x: newPoint.x.toString(),
         y: newPoint.y.toString(),
         r: newPoint.r.toString(),
@@ -73,28 +73,31 @@ export default {
       console.log("FUNC: Clear table")
       this.error = ""
       sendReq('/api/pointApp/clear', {
-        login: this.login,
-        password: this.pass,
+        login: "some login",
+        password: "some password",
       })
           .then(response => response.json())
           .then(data => {
             console.log(data)
-            //this.updatePoints() //this.$emit('table', {data: [], status: data.status})
-            //this.$refs.canvas.clear_dots();
+            if(data.toString() === "false") {
+              console.log("Bad response");
+            }
+            else{
+              this.updatePoints();
+            }
           });
     },
     updatePoints(){
       console.log("FUNC: Update table")
       this.error = ""
       sendReq('/api/pointApp/pointTable', {
-        login: this.login,
-        password: this.pass,
+        login: "some login",
+        password: "some password",
       })
           .then(response => response.json())
           .then(data => {
             console.log(data)
-            //this.points = data; //this.$emit('table', data)
-            //this.$refs.canvas.dots(data)
+            points = data
           });
     }
   }

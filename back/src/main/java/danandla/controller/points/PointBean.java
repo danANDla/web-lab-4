@@ -1,12 +1,12 @@
 package danandla.controller.points;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import danandla.model.dbutils.PointTableUtil;
 import danandla.model.entities.Point;
+import org.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.util.Calendar;
 import java.util.List;
 
 @Stateless
@@ -18,7 +18,16 @@ public class PointBean {
         return pointTableUtil.getTable();
     }
 
-    public boolean insertPoint(Point newPoint){
+    public boolean insertPoint(String params){
+        JSONObject recieved = new JSONObject(params);
+        Point newPoint = new Point(
+                Float.parseFloat(recieved.getString("x")),
+                Float.parseFloat(recieved.getString("y")),
+                Float.parseFloat(recieved.getString("r")),
+                true,
+                123,
+                Calendar.getInstance().getTime().toString()
+        );
         return pointTableUtil.insertPoint(newPoint);
     }
 
@@ -27,8 +36,6 @@ public class PointBean {
     }
 
     public void parseParams(String params){
-        Gson gson = new Gson();
-        JsonObject parsed = gson.fromJson(params, JsonObject.class);
         System.out.println(params);
     }
 }
