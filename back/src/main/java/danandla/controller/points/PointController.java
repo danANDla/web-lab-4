@@ -16,7 +16,7 @@ import javax.ws.rs.core.Response;
 import java.util.Calendar;
 import java.util.List;
 
-@Path("areacheck")
+@Path("pointApp")
 @ApplicationScoped
 public class PointController {
     @EJB
