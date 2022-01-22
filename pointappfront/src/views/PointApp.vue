@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import login from "../components/startCompos/login";
+
 async function sendReq(url, params){
   url = "http://127.0.0.1:8080/web4-1.0" + url;
   return await fetch(url, {
@@ -46,19 +48,29 @@ export default {
   },
   methods:{
     sendData: function (newPoint){
+      console.log("FUNC: Send point")
       sendReq("/api/pointApp/parseParams", {
         x: newPoint.x.toString(),
         y: newPoint.y.toString(),
-        r: newPoint.r.toString()
+        r: newPoint.r.toString(),
+        login: "some user",
+        pass: "some password"
       })
           .then(response => response.json())
           .then(data => {
             console.log(data)
-            this.points = data; //this.$emit('table', data)
-            //this.$refs.canvas.dots(data)
+            if(data.toString() === "false") {
+              console.log("Bad response");
+            }
+            else{
+              this.updatePoints();
+              //this.points = data; //this.$emit('table', data)
+              //this.$refs.canvas.dots(data)
+            }
           });
     },
     clearData: function(){
+      console.log("FUNC: Clear table")
       this.error = ""
       sendReq('/api/pointApp/clear', {
         login: this.login,
@@ -67,12 +79,12 @@ export default {
           .then(response => response.json())
           .then(data => {
             console.log(data)
-            this.updatePoints() //this.$emit('table', {data: [], status: data.status})
+            //this.updatePoints() //this.$emit('table', {data: [], status: data.status})
             //this.$refs.canvas.clear_dots();
           });
     },
     updatePoints(){
-      console.log("update points")
+      console.log("FUNC: Update table")
       this.error = ""
       sendReq('/api/pointApp/pointTable', {
         login: this.login,
@@ -81,7 +93,7 @@ export default {
           .then(response => response.json())
           .then(data => {
             console.log(data)
-            this.points = data; //this.$emit('table', data)
+            //this.points = data; //this.$emit('table', data)
             //this.$refs.canvas.dots(data)
           });
     }

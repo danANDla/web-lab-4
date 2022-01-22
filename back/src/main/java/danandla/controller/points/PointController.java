@@ -41,10 +41,11 @@ public class PointController {
 //               .entity(answer).build();
 //    }
 
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/pointTable")
-    public Response getPointsTable(){
+    public Response getPointsTable(String params){
+        pointBean.parseParams(params);
         List<Point> table = pointBean.getTable();
         String answer = new Gson().toJson(table);
         return Response.status(200)
@@ -61,9 +62,10 @@ public class PointController {
                .entity(Boolean.toString(res)).build();
     }
 
-    @GET
+    @POST
     @Path("/clear")
-    public Response clearPointsTable(){
+    public Response clearPointsTable(String params){
+        pointBean.parseParams(params);
         boolean res = pointBean.clearTable();
         return Response.status(200)
                 .entity(Boolean.toString(res)).build();
@@ -75,11 +77,11 @@ public class PointController {
         pointBean.parseParams(params);
         boolean res = true;
         return Response.status(200)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
-                .header("Access-Control-Allow-Credentials", "true")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
-                .header("Access-Control-Max-Age", "1")
+//                .header("Access-Control-Allow-Origin", "*")
+//                .header("Access-Control-Allow-Headers", "origin, content-type, accept, authorization")
+//                .header("Access-Control-Allow-Credentials", "true")
+//                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD")
+//                .header("Access-Control-Max-Age", "1")
                 .entity(Boolean.toString(res)).build();
     }
 }
