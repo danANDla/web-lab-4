@@ -1,7 +1,9 @@
 package danandla.controller.points;
 
 import com.google.gson.Gson;
+import danandla.model.NetPoint;
 import danandla.model.entities.Point;
+import sun.nio.ch.Net;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
@@ -43,7 +45,7 @@ public class PointController {
     @Path("/pointTable")
     public Response getPointsTable(String params){
         pointBean.parseParams(params);
-        List<Point> table = pointBean.getTable();
+        List<NetPoint> table = pointBean.getTable();
         String answer = new Gson().toJson(table);
         return Response.status(200)
                 .entity(answer).build();

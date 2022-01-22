@@ -1,5 +1,6 @@
 package danandla.controller.points;
 
+import danandla.model.NetPoint;
 import danandla.model.dbutils.PointTableUtil;
 import danandla.model.entities.Point;
 import org.json.JSONObject;
@@ -14,7 +15,7 @@ public class PointBean {
     @EJB
     PointTableUtil pointTableUtil = new PointTableUtil();
 
-    public List<Point> getTable(){
+    public List<NetPoint> getTable(){
         return pointTableUtil.getTable();
     }
 

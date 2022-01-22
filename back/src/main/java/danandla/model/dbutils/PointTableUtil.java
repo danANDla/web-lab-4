@@ -1,13 +1,13 @@
 package danandla.model.dbutils;
 
+import danandla.model.NetPoint;
 import danandla.model.entities.Point;
 import danandla.model.entities.mypoint;
+import sun.nio.ch.Net;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -42,12 +42,25 @@ public class PointTableUtil{
         return Collections.emptyList();
     }
 
-    public List<Point> getTable(){
+    public List<NetPoint> getTable(){
         try{
             initconnect();
             List<Point> receviedTable = (List<Point>) em.createQuery("select c from Point c", Point.class).getResultList();
             em.close();
-            return receviedTable;
+            List<NetPoint> ret = new ArrayList<NetPoint>();
+            long idP = 1;
+            for(Point point: receviedTable){
+                NetPoint netPoint = new NetPoint(
+                        idP,
+                        point.getX(),
+                        point.getY(),
+                        point.getR(),
+                        point.isHit(),
+                        point.getStime()
+                );
+                ret.add(netPoint);
+            }
+            return ret;
         }
         catch (RuntimeException e){
             System.out.println("Exception was handled in the getPointsTable: " + e);
