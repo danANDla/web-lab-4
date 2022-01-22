@@ -3,7 +3,6 @@ package danandla.model.dbutils;
 import danandla.model.NetPoint;
 import danandla.model.entities.Point;
 import danandla.model.entities.mypoint;
-import sun.nio.ch.Net;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;

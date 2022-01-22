@@ -97,7 +97,7 @@ export default {
           .then(response => response.json())
           .then(data => {
             console.log(data)
-            //points = data
+            this.points = data
           });
     }
   }

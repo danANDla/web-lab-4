@@ -7,6 +7,7 @@
         <td> Y </td>
         <td> R </td>
         <td> sent on </td>
+        <td> is hit</td>
       </tr>
       </thead>
       <tbody id="scrollBody">
@@ -15,7 +16,8 @@
           <td>{{point.x}}</td>
           <td>{{point.y}}</td>
           <td>{{point.r}}</td>
-          <td>{{point.ishit}}</td>
+          <td>{{point.stime}}</td>
+          <td>{{point.hit}}</td>
         </tr>
       </template>
       </tbody>
