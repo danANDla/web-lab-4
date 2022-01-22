@@ -59,6 +59,7 @@ public class PointTableUtil{
                         point.getStime()
                 );
                 ret.add(netPoint);
+                idP += 1;
             }
             return ret;
         }
