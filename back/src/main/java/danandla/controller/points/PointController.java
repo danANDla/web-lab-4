@@ -54,28 +54,26 @@ public class PointController {
     @POST
     @Path("/add")
     public Response addPoint(String params){
-//        String stime = Calendar.getInstance().getTime().toString();
-//        Point newPoint = new Point(1.0f, 2.0f, 3.0f, true, 123, stime);
-        boolean res = pointBean.insertPoint(params);
+        boolean answer = pointBean.insertPoint(params);
         return Response.status(200)
-               .entity(Boolean.toString(res)).build();
+               .entity(Boolean.toString(answer)).build();
     }
 
     @POST
     @Path("/clear")
     public Response clearPointsTable(String params){
         pointBean.parseParams(params);
-        boolean res = pointBean.clearTable();
+        boolean answer = pointBean.clearTable();
         return Response.status(200)
-                .entity(Boolean.toString(res)).build();
+                .entity(Boolean.toString(answer)).build();
     }
 
     @POST
     @Path("/parseParams")
     public Response parsePointsParams(String params){
         pointBean.parseParams(params);
-        boolean res = true;
+        boolean answer = true;
         return Response.status(200)
-                .entity(Boolean.toString(res)).build();
+                .entity(Boolean.toString(answer)).build();
     }
 }
