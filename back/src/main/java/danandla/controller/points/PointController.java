@@ -2,8 +2,6 @@ package danandla.controller.points;
 
 import com.google.gson.Gson;
 import danandla.model.NetPoint;
-import danandla.model.entities.Point;
-import sun.nio.ch.Net;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;

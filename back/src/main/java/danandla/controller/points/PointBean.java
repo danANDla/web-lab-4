@@ -7,7 +7,9 @@ import org.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import java.util.Calendar;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.List;
 
 @Stateless
@@ -20,6 +22,10 @@ public class PointBean {
     }
 
     public boolean insertPoint(String params){
+        LocalDateTime ldt = LocalDateTime.now().plusDays(1);
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL);
+        String stime = formatter.format(ldt);
+
         JSONObject recieved = new JSONObject(params);
         Point newPoint = new Point(
                 Float.parseFloat(recieved.getString("x")),
@@ -27,7 +33,7 @@ public class PointBean {
                 Float.parseFloat(recieved.getString("r")),
                 true,
                 123,
-                Calendar.getInstance().getTime().toString()
+                stime
         );
         return pointTableUtil.insertPoint(newPoint);
     }
