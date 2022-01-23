@@ -28,17 +28,6 @@
 </template>
 
 <script>
-async function sendReq(url, params){
-  url = "http://127.0.0.1:8080/web4-1.0" + url;
-  return await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=UTF-8'
-    },
-    body: JSON.stringify(params)
-  });
-}
-
 import UsualButton from "@/components/UI/button";
 export default {
   name: "login",
@@ -53,36 +42,10 @@ export default {
   methods:{
     signIn : function(){
       console.log("sign in")
-      this.status = ""
-      sendReq('/api/auth/sign-in', {
-        login: this.login,
-        password: this.pass
-      })
-          .then(response => response.json())
-          .then(data => {
-            console.log(data)
-            this.status = data.data
-            if (data.status.toString() === "true") {
-              this.$router.push({name: 'main', params: {login: this.login, pass: this.pass, registered: 'true'}})
-            }
-          });
     },
 
     signUp : function(){
-      console.log("sign up")
-      this.status = ""
-      sendReq('/api/auth/sign-up', {
-        login: this.login,
-        password: this.pass
-      })
-          .then(response => response.json())
-          .then(data => {
-            console.log(data)
-            this.status = data.data
-            if (data.status.toString() === "true") {
-              this.$router.push({name: 'PointApp', params: {login: this.login, pass: this.pass, registered: 'true'}})
-            }
-          });
+      this.$emit("regUser", this.login, this.pass);
     }
   }
 }

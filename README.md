@@ -38,7 +38,7 @@
  - https://www.dokwork.ru/2014/08/restful.html
  - https://learntutorials.net/ru/java-ee/topic/7008/java-restful-web-services--jax-rs-
  - https://www.youtube.com/watch?v=dmMdLW92hBA
-### other
+### vue
  - https://medium.com/bb-tutorials-and-thoughts/how-to-develop-and-build-vue-js-app-with-java-backend-4e9d72bb8ce5
 ### beans
  - https://tomee.apache.org/examples-trunk/cdi-application-scope/
@@ -46,3 +46,6 @@
 ### cors
  - https://forum.camunda.org/t/enable-cors-on-wildfly/673/2
  - https://www.baeldung.com/cors-in-jax-rs
+### storing passwords
+ - https://www.vaadata.com/blog/how-to-securely-store-passwords-in-database/
+ - https://www.baeldung.com/java-password-hashing
