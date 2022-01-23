@@ -1,6 +1,8 @@
 package danandla.controller.users;
 
 import danandla.model.PasswordKitchen;
+import danandla.model.dbutils.UserTableUtil;
+import danandla.model.entities.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -11,6 +13,9 @@ import java.util.Arrays;
 
 @Stateful
 public class UserBean {
+
+    @EJB
+    private final UserTableUtil userTableUtil = new UserTableUtil();
 
     @EJB
     private final PasswordKitchen passwordKitchen = new PasswordKitchen();
@@ -48,9 +53,18 @@ public class UserBean {
         boolean res = false;
         if(getParams(params)){
             System.out.println("got params" + params);
-            byte[] newPass = passwordKitchen.doHash(password, passwordKitchen.generateSalt());
-            System.out.println("generated hash " + Arrays.toString(newPass));
-            if(newPass != null) res = true;
+            if(userTableUtil.getUserByLogin(login) == null){
+                byte[] newSalt = passwordKitchen.generateSalt();
+                byte[] newPass = passwordKitchen.doHash(password, newSalt);
+                System.out.println("generated hash " + Arrays.toString(newPass));
+                if(newPass != null){
+                    User newUser = new User(login, newPass, newSalt);
+                    res = userTableUtil.insertUser(newUser);
+                }
+            }
+            else{
+                System.out.println("user with this login already exists");
+            }
         }
         return res;
     }

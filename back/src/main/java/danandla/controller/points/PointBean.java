@@ -15,7 +15,7 @@ import java.util.List;
 @Stateless
 public class PointBean {
     @EJB
-    PointTableUtil pointTableUtil = new PointTableUtil();
+    private final PointTableUtil pointTableUtil = new PointTableUtil();
 
     public List<NetPoint> getTable(){
         return pointTableUtil.getTable();

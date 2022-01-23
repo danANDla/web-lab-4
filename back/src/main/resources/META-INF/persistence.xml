@@ -11,4 +11,12 @@
             <property name="eclipselink.ddl-generation" value="create-tables"/>
         </properties>
     </persistence-unit>
+    <persistence-unit name="usertableunit">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <jta-data-source>java:/postgresDS</jta-data-source>
+        <class>danandla.model.entities.User</class>
+        <properties>
+            <property name="eclipselink.ddl-generation" value="create-tables"/>
+        </properties>
+    </persistence-unit>
 </persistence>

@@ -5,36 +5,23 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 @Entity
-@Table(name="usersTable")
+@Table(name = "userstable")
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.TABLE)
-    @Column(name = "UserId")
-    private long userId;
+    private long id;
 
     @Column(name = "Login")
     private String login;
 
     @Column(name = "Password")
-    private byte[] password;
+    private byte [] password;
 
     @Column(name = "Salt")
     private byte[] salt;
 
-    public long getUserId() {
-        return userId;
-    }
-
     public String getLogin() {
         return login;
-    }
-
-    public byte[] getPassword() {
-        return password;
-    }
-
-    public byte[] getSalt() {
-        return salt;
     }
 
     public User(){}
@@ -47,8 +34,8 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "user{" +
-                "userId=" + userId +
+        return "User{" +
+                "id=" + id +
                 ", login='" + login + '\'' +
                 ", password=" + Arrays.toString(password) +
                 ", salt=" + Arrays.toString(salt) +
