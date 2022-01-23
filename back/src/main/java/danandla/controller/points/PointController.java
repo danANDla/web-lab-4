@@ -28,16 +28,6 @@ public class PointController {
                 .entity(answer).build();
     }
 
-//    @GET
-//    @Produces(MediaType.APPLICATION_JSON)
-//    @Path("/mypointTable")
-//    public Response mypointsTable(){
-//        List<mypoint> table = pointBean.getmyointsTable();
-//        String answer = new Gson().toJson(table);
-//        return Response.status(200)
-//               .entity(answer).build();
-//    }
-
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/pointTable")

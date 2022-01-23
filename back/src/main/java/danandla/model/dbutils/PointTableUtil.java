@@ -2,7 +2,6 @@ package danandla.model.dbutils;
 
 import danandla.model.NetPoint;
 import danandla.model.entities.Point;
-import danandla.model.entities.mypoint;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;
@@ -20,25 +19,6 @@ public class PointTableUtil{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hittableunit");
         em = emf.createEntityManager();
         tr = em.getTransaction();
-    }
-    public void initconnectold() throws RuntimeException {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("hittableunitOLD");
-        em = emf.createEntityManager();
-        tr = em.getTransaction();
-    }
-
-    public List<mypoint> getmyointsTable(){
-        try{
-            initconnectold();
-            List<mypoint> receviedTable = (List<mypoint>) em.createQuery("select c from mypoint c", mypoint.class).getResultList();
-            em.close();
-            return receviedTable;
-        }
-        catch (RuntimeException e){
-            System.out.println("Exception was handled");
-            if(tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
-        }
-        return Collections.emptyList();
     }
 
     public List<NetPoint> getTable(){
