@@ -45,7 +45,6 @@ export default {
         x: 0,
         y: 0,
         r: 0,
-        hit: 0
       },
       points: [  ]
     }
@@ -58,8 +57,6 @@ export default {
       this.newPoint.r = newR;
     },
     sendData: function (){
-      this.newPoint.time = Date.now();
-      this.newPoint.ishit = this.newPoint.hit === '1';
       this.$emit('pushPoint', this.newPoint);
     },
     clearData: function (){

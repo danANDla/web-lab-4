@@ -25,7 +25,7 @@
 import login from "../components/startCompos/login";
 
 async function sendReq(url, params){
-  url = "http://127.0.0.1:8080/web4-1.0" + url;
+  url = "http://127.0.0.1:8080/web4-1.0/api/pointApp" + url;
   return await fetch(url, {
     method: 'POST',
     headers: {
@@ -49,7 +49,7 @@ export default {
   methods:{
     sendData: function (newPoint){
       console.log("FUNC: Send point")
-      sendReq("/api/pointApp/add", {
+      sendReq("/add", {
         x: newPoint.x.toString(),
         y: newPoint.y.toString(),
         r: newPoint.r.toString(),
@@ -72,7 +72,7 @@ export default {
     clearData: function(){
       console.log("FUNC: Clear table")
       this.error = ""
-      sendReq('/api/pointApp/clear', {
+      sendReq('/clear', {
         login: "some login",
         password: "some password",
       })
@@ -90,7 +90,7 @@ export default {
     updatePoints(){
       console.log("FUNC: Update table")
       this.error = ""
-      sendReq('/api/pointApp/pointTable', {
+      sendReq('/pointTable', {
         login: "some login",
         password: "some password",
       })
