@@ -112,6 +112,12 @@ export default {
             console.log(data)
             this.points = data
           });
+    },
+    logOut(){
+      this.login = "";
+      this.pass = "";
+      this.status = "";
+      this.$router.push({name: "Start"});
     }
   },
   created() {
