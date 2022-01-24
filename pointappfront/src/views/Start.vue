@@ -2,10 +2,12 @@
   <div>
     <header>
       <span>Алексеев Даниил</span> P3233<br>
-      вар. 33407
+      вар. 3309
     </header>
     <main>
-      <login @regUser="signUp"></login>
+      <div class="content-wrapper">
+        <login @regUser="signUp"></login>
+      </div>
     </main>
 
     <footer>
@@ -30,28 +32,19 @@ export default {
   name: "Start",
   components: {Login},
   methods: {
-    signUp: function (newLogin, newPass){
-      console.log(newPass);
-      sendReq("/signup", {
-        login: newLogin,
-        password: newPass
-      })
-          .then(response => response.json())
-          .then(data => {
-            console.log(data)
-            if(data.toString() === "false") {
-              console.log("Bad response");
-            }
-            else{
-              console.log("Good response");
-            }
-          });
-    }
   }
 }
 
 </script>
 
 <style scoped>
-
+main{
+  padding: 10px;
+}
+.content-wrapper{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
 </style>

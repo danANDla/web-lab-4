@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Start from "@/views/Start"
 import PointApp from "@/views/PointApp";
+import Registration from "@/views/Registration";
 
 const routes = [
   {
@@ -9,9 +10,15 @@ const routes = [
     component: Start
   },
   {
+    path: '/registration',
+    name: 'Registration',
+    component: Registration
+  },
+  {
     path: '/pointapp',
     name: 'PointApp',
-    component: PointApp
+    component: PointApp,
+    params: true
   }
 ]
 

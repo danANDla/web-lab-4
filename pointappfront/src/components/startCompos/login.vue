@@ -1,28 +1,31 @@
 <template>
   <div class="login">
-    <div class="input-text-block">
-      <div class="input-wrappers">
-        <div class="login-text">
-          <div class="wrappers">
-            <div class="value-label">login</div>
-            <input type="text" placeholder="Type login" v-model="login">
-          </div>
-        </div>
-
-        <div class="pass-text">
-          <div class="wrappers">
-            <div class="value-label">password</div>
-            <input type="text" placeholder="Type password" v-model="pass">
+    <div class="signin">
+      <div class="login-text">
+        <div class="wrappers">
+          <div class="value-label">login</div>
+          <div>
+            <input type="text" v-model="login">
           </div>
         </div>
       </div>
-    </div>
-    <div class="login-btns-block">
-        <usual-button @click.native="signIn">sign in</usual-button>
-        <div class="signUP-block">
-          Not registred yet?
-          <usual-button @click.native="signUp">sign up</usual-button>
+      <div class="pass-text">
+        <div class="wrappers">
+          <div class="value-label">password</div>
+          <div>
+            <input type="password" v-model="pass">
+          </div>
         </div>
+      </div>
+      <div class="btn-block">
+        <usual-button @click.native="signIn">sign in</usual-button>
+      </div>
+    </div>
+
+    <div class="signup">
+      <div class="btn-block">
+        <usual-button @click.native="signUp" btn-type="interesting">sign up</usual-button>
+      </div>
     </div>
   </div>
 </template>
@@ -44,50 +47,49 @@ export default {
       console.log("sign in")
     },
 
-    signUp : function(){
-      this.$emit("regUser", this.login, this.pass);
-    }
   }
 }
 </script>
 
 <style scoped>
-.login{
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  width: 60%;
+.signin, .signup{
+  width: 100%;
   background: #202020;
-  padding: 10px;
+  padding: 23px;
+  display: block;
+}
+.signin{
+  margin-bottom: 10px;
 }
 .value-label{
-  margin-left: 2px;
+  margin-bottom: 6px;
   font-weight: 500;
 }
-
-.login-text > .wrappers > input, .pass-text > .wrappers > input {
-  margin-left: 10px;
+.wrappers > div{
+  display: block;
 }
-.pass-text{
-  margin-top: 12px;
+.login-text, .pass-text{
+  margin-bottom: 30px;
 }
-.wrappers{
-  display: flex;
-}
-.login-btns-block{
-  text-align: right;
+.btn-block{
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
-.input-text-block{
+.signup{
   display: flex;
+  flex-direction: column;
   align-items: center;
+  width: 100%;
 }
-.wrappers{
-  text-align: right;
-}
-.signUP-block{
-  margin-top: 15px;
-  display: flex;
-  flex-direction: column;
+
+input {
+  font-size: 16px;
+  font-family: inherit;
+  padding: 0.25em 0.5em;
+  background-color: #fff;
+  border: 2px solid #ffffff;
+  border-radius: 4px;
+  transition: 180ms box-shadow ease-in-out;
 }
 </style>

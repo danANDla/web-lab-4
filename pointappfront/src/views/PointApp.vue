@@ -1,8 +1,8 @@
 <template>
   <div>
     <header>
-      <span>Алексеев Даниил</span> P3233<br>
-      вар. 33407
+      <div class="toStart">PointsApp</div>
+      <div class="username">{{login}}</div>
     </header>
     <main>
       <div class="content-wrapper">
@@ -36,13 +36,14 @@ async function sendReq(url, params){
 }
 import PointTable from "@/components/appCompos/point-table";
 import PointForm from "@/components/appCompos/point-form";
+import router from "@/router";
 export default {
   components: {PointForm, PointTable},
   data() {
     return {
       login: this.$route.params.login,
       pass: this.$route.params.pass,
-      registered: this.$route.params.registered,
+      status: this.$route.params.status,
       points: [  ]
     }
   },
@@ -100,6 +101,11 @@ export default {
             this.points = data
           });
     }
+  },
+  created() {
+    if(this.status !== "ok"){
+      this.$router.push({name: "Start"});
+    }
   }
 }
 </script>
@@ -124,5 +130,21 @@ export default {
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 3;
+}
+header{
+  display: flex;
+  padding: 5px;
+}
+
+.toStart{
+  flex-grow: 1;
+  text-align: left;
+}
+.username{
+  flex-grow: 1;
+  text-align: right;
+}
+main{
+  padding: 10px;
 }
 </style>

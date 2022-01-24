@@ -42,7 +42,6 @@ header > span {
 }
 
 main{
-  padding: 10px;
   height: 80vh;
 }
 </style>

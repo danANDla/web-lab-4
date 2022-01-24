@@ -1,14 +1,9 @@
 package danandla.model.dbutils;
 
-import danandla.model.NetPoint;
-import danandla.model.entities.Point;
 import danandla.model.entities.User;
 
 import javax.ejb.Stateless;
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 @Stateless
 public class UserTableUtil {
