@@ -66,8 +66,8 @@ export default {
         x: newPoint.x.toString(),
         y: newPoint.y.toString(),
         r: newPoint.r.toString(),
-        login: "some user",
-        pass: "some password"
+        login: this.login,
+        password: this.pass
       })
           .then(response => response.json())
           .then(data => {
@@ -86,8 +86,8 @@ export default {
       console.log("FUNC: Clear table")
       this.error = ""
       sendReq('/clear', {
-        login: "some login",
-        password: "some password",
+        login: this.login,
+        password: this.pass
       })
           .then(response => response.json())
           .then(data => {
@@ -104,8 +104,8 @@ export default {
       console.log("FUNC: Update table")
       this.error = ""
       sendReq('/pointTable', {
-        login: "some login",
-        password: "some password",
+        login: this.login,
+        password: this.pass
       })
           .then(response => response.json())
           .then(data => {
@@ -182,17 +182,17 @@ main{
   right: 0;
   left: auto;
   width: 100%;
-  padding: 5px;
+  padding: 8px;
 }
 
 .dropdown:hover .hidden-button{
   margin-top: 5px;
   display: flex;
-  background-color: #202020;
+  background-color: #343434;
   flex-direction: column;
 }
 
 .dropdown:hover{
-  background-color: #202020;
+  background-color: #343434;
 }
 </style>

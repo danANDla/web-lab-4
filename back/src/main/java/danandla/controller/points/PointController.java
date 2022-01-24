@@ -32,8 +32,7 @@ public class PointController {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/pointTable")
     public Response getPointsTable(String params){
-        pointBean.parseParams(params);
-        List<NetPoint> table = pointBean.getTable();
+        List<NetPoint> table = pointBean.getTable(params);
         String answer = new Gson().toJson(table);
         return Response.status(200)
                 .entity(answer).build();

@@ -13,7 +13,6 @@ public class UserController {
     @EJB
     UserBean userBean;
 
-
     @POST
     @Path("/signin")
     public Response signIn(String params){

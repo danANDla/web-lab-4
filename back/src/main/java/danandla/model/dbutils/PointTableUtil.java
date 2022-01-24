@@ -21,10 +21,14 @@ public class PointTableUtil{
         tr = em.getTransaction();
     }
 
-    public List<NetPoint> getTable(){
+    public List<NetPoint> getTable(long userid){
         try{
             initconnect();
-            List<Point> receviedTable = (List<Point>) em.createQuery("select c from Point c", Point.class).getResultList();
+            //List<Point> receviedTable = (List<Point>) em.createQuery("select c from Point c", Point.class).getResultList();
+            System.out.println("Trying to get points of user with id" + userid);
+            Query query = em.createQuery("select c from Point c where c.userid = :userid", Point.class);
+            query.setParameter("userid", userid);
+            List<Point> receviedTable = (List<Point>) query.getResultList();
             em.close();
             List<NetPoint> ret = new ArrayList<NetPoint>();
             long idP = 1;

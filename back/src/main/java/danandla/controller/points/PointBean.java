@@ -2,35 +2,89 @@ package danandla.controller.points;
 
 import danandla.model.NetPoint;
 import danandla.model.dbutils.PointTableUtil;
+import danandla.model.dbutils.UserTableUtil;
 import danandla.model.entities.Point;
+import danandla.model.entities.User;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
-@Stateless
+@Stateful
 public class PointBean {
     @EJB
     private final PointTableUtil pointTableUtil = new PointTableUtil();
+    @EJB
+    private final UserTableUtil userTableUtil = new UserTableUtil();
 
-    public List<NetPoint> getTable(){
-        return pointTableUtil.getTable();
+    private String login;
+    private String password;
+    private float x;
+    private float y;
+    private float r;
+
+    private boolean getUserParams(String params){
+        boolean res = false;
+        try{
+            JSONObject recieved = new JSONObject(params);
+            login = recieved.getString("login");
+            password = recieved.getString("password");
+            res = true;
+        } catch (JSONException e){
+            System.out.println("bad json");
+        }
+        return res;
+    }
+
+    private boolean getFullParams(String params){
+        System.out.println(params);
+        boolean res = false;
+        if(getUserParams(params)){
+            try{
+                JSONObject recieved = new JSONObject(params);
+                x = Float.parseFloat(recieved.getString("x"));
+                y = Float.parseFloat(recieved.getString("y"));
+                r = Float.parseFloat(recieved.getString("r"));
+                res = true;
+            } catch (JSONException e){
+                System.out.println("bad json");
+            }
+        }
+        return res;
+    }
+
+    public List<NetPoint> getTable(String params){
+        List<NetPoint> ret = Collections.emptyList();
+        if(getUserParams(params)){
+            User found = userTableUtil.getUserByLogin(login);
+            if(found!=null){
+                ret = pointTableUtil.getTable(found.getId());
+            }
+        }
+        return ret;
     }
 
     public boolean insertPoint(String params){
-        LocalDateTime ldt = LocalDateTime.now().plusDays(1);
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
-        String stime = formatter.format(ldt);
-        JSONObject recieved = new JSONObject(params);
-        float x = Float.parseFloat(recieved.getString("x"));
-        float y = Float.parseFloat(recieved.getString("y"));
-        float r = Float.parseFloat(recieved.getString("r"));
-        Point newPoint = new Point( x, y, r,areaCheck(x,y,r),123, stime);
-        return pointTableUtil.insertPoint(newPoint);
+        boolean res = false;
+        if(getFullParams(params)){
+            User found = userTableUtil.getUserByLogin(login);
+            if(found!=null){
+                LocalDateTime ldt = LocalDateTime.now().plusDays(1);
+                DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+                String stime = formatter.format(ldt);
+                Point newPoint = new Point( x, y, r, areaCheck(x,y,r), found.getId(), stime);
+                res = pointTableUtil.insertPoint(newPoint);
+            }
+        }
+        return res;
     }
 
     public boolean clearTable(){

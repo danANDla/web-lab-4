@@ -16,34 +16,6 @@ public class UserTableUtil {
         tr = em.getTransaction();
     }
 
-//    public List<NetPoint> getTable(){
-//        try{
-//            initconnect();
-//            List<Point> receviedTable = (List<Point>) em.createQuery("select c from Point c", Point.class).getResultList();
-//            em.close();
-//            List<NetPoint> ret = new ArrayList<NetPoint>();
-//            long idP = 1;
-//            for(Point point: receviedTable){
-//                NetPoint netPoint = new NetPoint(
-//                        idP,
-//                        point.getX(),
-//                        point.getY(),
-//                        point.getR(),
-//                        point.isHit(),
-//                        point.getStime()
-//                );
-//                ret.add(netPoint);
-//                idP += 1;
-//            }
-//            return ret;
-//        }
-//        catch (RuntimeException e){
-//            System.out.println("Exception was handled in the getPointsTable: " + e);
-//            if(tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
-//        }
-//        return Collections.emptyList();
-//    }
-
     public boolean insertUser(User newUser){
         boolean resp = false;
         try{

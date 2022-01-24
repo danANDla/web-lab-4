@@ -32,6 +32,10 @@ public class User implements Serializable {
         return salt;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public User(){}
 
     public User(String login, byte[] password, byte[] salt) {
