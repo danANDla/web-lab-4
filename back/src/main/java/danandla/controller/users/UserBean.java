@@ -39,8 +39,12 @@ public class UserBean {
     public boolean signIn(String params){
         boolean res = false;
         if(getParams(params)){
-            if(!(login.equals("") || password.equals(""))){
-                // todo search in user db
+            System.out.println("got params" + params);
+            User found = userTableUtil.getUserByLogin(login);
+            if(found!=null){
+                byte[] recivedHash = passwordKitchen.doHash(password, found.getSalt());
+                byte[] storedHash = found.getPassword();
+                if(Arrays.equals(recivedHash, storedHash)) res = true;
             }
         }
         else {

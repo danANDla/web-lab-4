@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="btn-block">
-        <usual-button @click.native="signUp">create account</usual-button>
+        <usual-button @click.native="signUp">create an account</usual-button>
       </div>
     </div>
   </div>

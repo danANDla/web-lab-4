@@ -14,13 +14,13 @@ public class UserController {
     UserBean userBean;
 
 
-//    @POST
-//    @Path("/signin")
-//    public Response signIn(String params){
-//        boolean answer = userBean.signIn(params);
-//        return javax.ws.rs.core.Response.status(200)
-//                .entity(Boolean.toString(answer)).build();
-//    }
+    @POST
+    @Path("/signin")
+    public Response signIn(String params){
+        boolean answer = userBean.signIn(params);
+        return javax.ws.rs.core.Response.status(200)
+                .entity(Boolean.toString(answer)).build();
+    }
 
     @POST
     @Path("/signup")

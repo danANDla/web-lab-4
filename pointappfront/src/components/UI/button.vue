@@ -1,5 +1,5 @@
 <template>
-  <button v-bind:class="{isDangerous: dangerous, isSafe: safe, isInteresting: interesting}">
+  <button v-bind:class="{isDangerous: dangerous, isSafe: safe, isInteresting: interesting, isRed: red}">
     <slot></slot>
   </button>
 </template>
@@ -16,6 +16,9 @@ export default {
     },
     interesting: function (){
       return this.btnType === 'interesting'
+    },
+    red: function (){
+      return this.btnType === "dangdang"
     },
     safe: function(){
       return !this.dangerous && !this.interesting
@@ -55,6 +58,18 @@ button.isInteresting {
   background-color: #8f8fff;
 }
 button.isInteresting:hover {
+  color: #000000;
+  background-color: #ffffff;
+  border: 0.1em solid #FFFFFF;
+}
+
+
+button.isRed {
+  color: #FFFFFF;
+  background-color: #ab2a3d;
+  border: 0.1em solid #ab2a3d;
+}
+button.isRed:hover {
   color: #000000;
   background-color: #ffffff;
   border: 0.1em solid #FFFFFF;

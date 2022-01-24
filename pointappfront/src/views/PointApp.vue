@@ -1,8 +1,19 @@
 <template>
   <div>
     <header>
-      <div class="toStart">PointsApp</div>
-      <div class="username">{{login}}</div>
+      <div class="toStart">
+        <div>
+         PointsApp
+        </div>
+      </div>
+      <div class="username">
+        <div class="dropdown">
+          <div class="dropbtn">{{login}}</div>
+          <div class="hidden-button">
+            <usual-button @click.native="logOut" btn-type="dangdang">log out</usual-button>
+          </div>
+        </div>
+      </div>
     </header>
     <main>
       <div class="content-wrapper">
@@ -37,8 +48,9 @@ async function sendReq(url, params){
 import PointTable from "@/components/appCompos/point-table";
 import PointForm from "@/components/appCompos/point-form";
 import router from "@/router";
+import UsualButton from "@/components/UI/button";
 export default {
-  components: {PointForm, PointTable},
+  components: {UsualButton, PointForm, PointTable},
   data() {
     return {
       login: this.$route.params.login,
@@ -144,7 +156,37 @@ header{
   flex-grow: 1;
   text-align: right;
 }
+.username > div, .toStart > div{
+  padding: 5px;
+  display: inline-block;
+}
 main{
   padding: 10px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.hidden-button{
+  display: none;
+  z-index: 1;
+  position: absolute;
+  right: 0;
+  left: auto;
+  width: 100%;
+  padding: 5px;
+}
+
+.dropdown:hover .hidden-button{
+  margin-top: 5px;
+  display: flex;
+  background-color: #202020;
+  flex-direction: column;
+}
+
+.dropdown:hover{
+  background-color: #202020;
 }
 </style>

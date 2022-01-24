@@ -24,6 +24,14 @@ public class User implements Serializable {
         return login;
     }
 
+    public byte[] getPassword() {
+        return password;
+    }
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
     public User(){}
 
     public User(String login, byte[] password, byte[] salt) {

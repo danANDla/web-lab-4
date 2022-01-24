@@ -44,9 +44,17 @@ export default {
   },
   methods:{
     signIn : function(){
-      console.log("sign in")
+      if(this.pass !== "" && this.login !== ""){
+        this.$emit("logIn", this.login, this.pass);
+      }
+      else{
+        console.log("empty");
+        this.error = "empty fields";
+      }
     },
-
+    signUp: function (){
+      this.$router.push({name: "Registration"})
+    }
   }
 }
 </script>

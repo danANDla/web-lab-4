@@ -6,7 +6,7 @@
     </header>
     <main>
       <div class="content-wrapper">
-        <login @regUser="signUp"></login>
+        <login @logIn="signIn"></login>
       </div>
     </main>
 
@@ -32,6 +32,23 @@ export default {
   name: "Start",
   components: {Login},
   methods: {
+    signIn: function (Login, Pass){
+      sendReq("/signin", {
+        login: Login,
+        password: Pass
+      })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data)
+            if(data.toString() === "false") {
+              console.log("Bad response");
+            }
+            else{
+              console.log("Good response");
+              this.$router.push({name: "PointApp", params: {login: Login, pass: Pass, status: "ok"}});
+            }
+          });
+    }
   }
 }
 
