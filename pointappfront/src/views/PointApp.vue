@@ -124,6 +124,7 @@ export default {
     if(this.status !== "ok"){
       this.$router.push({name: "Start"});
     }
+    this.updatePoints();
   }
 }
 </script>
