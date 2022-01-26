@@ -1,44 +1,48 @@
 <template>
-  <form v-on:submit.prevent>
-    <div class="x-radio">
-      <div class="wrappers">
-        <div class="value-label">X</div>
-        <radio-btn @radioChange="changeXRadioBtn" ref="xComponent"></radio-btn>
+  <div>
+    <point-canvas v-model:points="points" v-model:r="newPoint.r" ref="canvasComponent"></point-canvas>
+    <form v-on:submit.prevent>
+      <div class="x-radio">
+        <div class="wrappers">
+          <div class="value-label">X</div>
+          <radio-btn @radioChange="changeXRadioBtn" ref="xComponent"></radio-btn>
+        </div>
       </div>
-    </div>
 
-    <div class="y-text">
-      <div class="wrappers">
-        <div class="value-label">Y</div>
-        <input type="text" placeholder="Type Y" v-model="newPoint.y">
+      <div class="y-text">
+        <div class="wrappers">
+          <div class="value-label">Y</div>
+          <input type="text" placeholder="Type Y" v-model="newPoint.y">
+        </div>
       </div>
-    </div>
-    <div class="r-radio">
-      <div class="wrappers">
-        <div class="value-label">R</div>
-        <radio-btn @radioChange="changeRRadioBtn" ref="rComponent"></radio-btn>
+      <div class="r-radio">
+        <div class="wrappers">
+          <div class="value-label">R</div>
+          <radio-btn @radioChange="changeRRadioBtn" ref="rComponent"></radio-btn>
+        </div>
       </div>
-    </div>
 
-    <div class="btns-block">
-      <div class="main-btns-block">
-        <usual-button @click.native="sendData">send</usual-button>
-        <usual-button @click.native="resetForm">reset</usual-button>
+      <div class="btns-block">
+        <div class="main-btns-block">
+          <usual-button @click.native="sendData">send</usual-button>
+          <usual-button @click.native="resetForm">reset</usual-button>
+        </div>
+        <div class="side-btns-block">
+          <usual-button @click.native="clearData" btn-type="dangerous">clear</usual-button>
+        </div>
       </div>
-      <div class="side-btns-block">
-        <usual-button @click.native="clearData" btn-type="dangerous">clear</usual-button>
-      </div>
-    </div>
-  </form>
+    </form>
+  </div>
 </template>
 
 <script>
 import UsualButton from "@/components/UI/button";
 import RadioBtn from "@/components/UI/radio-btn";
+import pointCanvas from "@/components/appCompos/point-canvas";
 
 export default {
   name: "point-form",
-  components: {RadioBtn, UsualButton},
+  components: {RadioBtn, UsualButton, pointCanvas},
   data(){
     return{
       newPoint: {
@@ -55,6 +59,7 @@ export default {
     },
     changeRRadioBtn: function (newR){
       this.newPoint.r = newR;
+      this.$refs.canvasComponent.init();
     },
     sendData: function (){
       this.$emit('pushPoint', this.newPoint);
