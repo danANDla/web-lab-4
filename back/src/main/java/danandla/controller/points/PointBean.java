@@ -1,6 +1,7 @@
 package danandla.controller.points;
 
 import danandla.model.NetPoint;
+import danandla.model.PasswordKitchen;
 import danandla.model.dbutils.PointTableUtil;
 import danandla.model.dbutils.UserTableUtil;
 import danandla.model.entities.Point;
@@ -24,28 +25,28 @@ public class PointBean {
     private final PointTableUtil pointTableUtil = new PointTableUtil();
     @EJB
     private final UserTableUtil userTableUtil = new UserTableUtil();
+    @EJB
+    PasswordKitchen passwordKitchen = new PasswordKitchen();
 
     private String login;
-    private String password;
     private float x;
     private float y;
     private float r;
 
-    private boolean getUserParams(String params){
-        boolean res = false;
+    private boolean getLogin(String jwt){
         try{
-            JSONObject recieved = new JSONObject(params);
-            login = recieved.getString("login");
-            res = true;
-        } catch (JSONException e){
-            System.out.println("bad json");
+            String AUTHENTICATION_SCHEME = "Bearer";
+            String token = jwt.substring(AUTHENTICATION_SCHEME.length()).trim();
+            login = passwordKitchen.decodeJWT(token).getSubject();
+            return true;
+        } catch (Exception e){
+            return false;
         }
-        return res;
     }
 
-    private boolean getFullParams(String params){
+    private boolean getFullParams(String params, String jwt){
         boolean res = false;
-        if(getUserParams(params)){
+        if(getLogin(jwt)){
             try{
                 JSONObject recieved = new JSONObject(params);
                 x = Float.parseFloat(recieved.getString("x"));
@@ -59,9 +60,10 @@ public class PointBean {
         return res;
     }
 
-    public List<NetPoint> getTable(String params){
+    public List<NetPoint> getTable(String params, String jwt){
         List<NetPoint> ret = Collections.emptyList();
-        if(getUserParams(params)){
+        if(getLogin(jwt)){
+            System.out.println("getPointsTable got params:" + params + "; login from jwt: " + login);
             User found = userTableUtil.getUserByLogin(login);
             if(found!=null){
                 ret = pointTableUtil.getTable(found.getId());
@@ -70,9 +72,10 @@ public class PointBean {
         return ret;
     }
 
-    public boolean insertPoint(String params){
+    public boolean insertPoint(String params, String jwt){
         boolean res = false;
-        if(getFullParams(params)){
+        if(getFullParams(params, jwt)){
+            System.out.println("getPointsTable got params:" + params + "; login from jwt: " + login);
             User found = userTableUtil.getUserByLogin(login);
             if(found!=null){
                 LocalDateTime ldt = LocalDateTime.now().plusDays(1);

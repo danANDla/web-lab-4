@@ -6,10 +6,7 @@ import danandla.model.NetPoint;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -33,27 +30,26 @@ public class PointController {
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/pointTable")
-    public Response getPointsTable(String params){
-        System.out.println("getPointsTable got params:" + params);
-        List<NetPoint> table = pointBean.getTable(params);
+    public Response getPointsTable(String params, @HeaderParam("Authorization") String jwt){
+        List<NetPoint> table = pointBean.getTable(params, jwt);
         String answer = new Gson().toJson(table);
         return Response.status(200)
                 .entity(answer).build();
     }
 
     @POST
+    @Secured
     @Path("/add")
-    public Response addPoint(String params){
-        System.out.println("addPoint got params:" + params);
-        boolean answer = pointBean.insertPoint(params);
+    public Response addPoint(String params, @HeaderParam("Authorization") String jwt){
+        boolean answer = pointBean.insertPoint(params, jwt);
         return Response.status(200)
                .entity(Boolean.toString(answer)).build();
     }
 
     @POST
+    @Secured
     @Path("/clear")
-    public Response clearPointsTable(String params){
-        System.out.println("clearTable got params:" + params);
+    public Response clearPointsTable(String params, @HeaderParam("Authorization") String jwt){
         pointBean.parseParams(params);
         boolean answer = pointBean.clearTable();
         return Response.status(200)

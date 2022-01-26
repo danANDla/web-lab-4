@@ -66,8 +66,7 @@ export default {
       sendReq("/add", {
         x: newPoint.x.toString(),
         y: newPoint.y.toString(),
-        r: newPoint.r.toString(),
-        login: this.login
+        r: newPoint.r.toString()
       }, this.token)
           .then(response => {
             if(response.status == 401){
@@ -91,7 +90,7 @@ export default {
     clearData: function(){
       console.log("FUNC: Clear table")
       this.error = ""
-      sendReq('/clear', {login: this.login}, this.token)
+      sendReq('/clear', null, this.token)
           .then(response => {
             if(response.status == 401){
               this.$router.push({name:"Start"})
@@ -112,7 +111,7 @@ export default {
     updatePoints(){
       console.log("FUNC: Update table")
       this.error = ""
-      sendReq('/pointTable', {login: this.login}, this.token)
+      sendReq('/pointTable', null, this.token)
           .then(response => {
             if(response.status == 401){
               this.$router.push({name:"Start"})
