@@ -20,6 +20,9 @@ public class User implements Serializable {
     @Column(name = "Salt")
     private byte[] salt;
 
+    @Column(name = "token")
+    private String token;
+
     public String getLogin() {
         return login;
     }
@@ -38,10 +41,18 @@ public class User implements Serializable {
 
     public User(){}
 
-    public User(String login, byte[] password, byte[] salt) {
+//    public User(String login, byte[] password, byte[] salt) {
+//        this.login = login;
+//        this.password = password;
+//        this.salt = salt;
+//    }
+
+
+    public User(String login, byte[] password, byte[] salt, String token) {
         this.login = login;
         this.password = password;
         this.salt = salt;
+        this.token = token;
     }
 
     @Override

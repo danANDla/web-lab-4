@@ -57,7 +57,7 @@ public class UserBean {
         if(res){
             String token = passwordKitchen.createJWT("xd", "archdla", login, 900000L);
             if(token == null) resp.setLoginStatus(LoginStatus.BAD_TOKEN);
-            else resp.setLoginStatus(LoginStatus.OK);
+            else resp.setLoginStatus(LoginStatus.OK); // todo update token in table
             resp.setJwtToken(token);
         }
         return resp;
@@ -72,7 +72,8 @@ public class UserBean {
                 byte[] newPass = passwordKitchen.doHash(password, newSalt);
                 System.out.println("generated hash " + Arrays.toString(newPass));
                 if(newPass != null){
-                    User newUser = new User(login, newPass, newSalt);
+                    String token = passwordKitchen.createJWT("xd", "archdla", login, 900000L);
+                    User newUser = new User(login, newPass, newSalt, token);
                     res = userTableUtil.insertUser(newUser);
                 }
             }
