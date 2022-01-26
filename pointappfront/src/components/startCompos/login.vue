@@ -117,6 +117,7 @@ input {
 }
 
 .error-msg{
+  text-align: center;
   color: #c1364c;
   margin-top: 10px;
   height: 20px;

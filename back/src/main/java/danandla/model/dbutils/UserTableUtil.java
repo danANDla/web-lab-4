@@ -48,4 +48,28 @@ public class UserTableUtil {
         }
         return null;
     }
+
+    public boolean updateToken( long userId, String token){
+        try{
+            initconnect();
+            tr.begin();
+            Query query = em.createQuery("select c from User c where c.id = :userId", User.class);
+            query.setParameter("userId", userId);
+            User receviedUser = (User) query.getSingleResult();
+            receviedUser.setToken(token);
+            em.merge(receviedUser);
+            tr.commit();
+//            Query query = em.createQuery("update User x set x.token = :token where x.id = :userId", User.class);
+//            query.setParameter("token", token);
+//            query.setParameter("userId", userId);
+//            query.executeUpdate();
+            em.close();
+            return true;
+        }
+        catch (RuntimeException e){
+            System.out.println("Exception was handled in the updateToken: " + e);
+            if(tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
+            return false;
+        }
+    }
 }

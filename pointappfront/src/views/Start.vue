@@ -61,6 +61,9 @@ export default {
             else if (data.loginStatus === "WRONG_PASSWORD"){
               this.error = "incorrect password";
             }
+            else if (data.loginStatus === "UNABLE_TO_UPDATE"){
+              this.error = "can't update token";
+            }
             else{
               this.error = "some_error";
             }

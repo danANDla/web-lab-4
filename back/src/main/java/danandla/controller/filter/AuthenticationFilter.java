@@ -1,8 +1,11 @@
 package danandla.controller.filter;
 
 import danandla.model.PasswordKitchen;
+import danandla.model.dbutils.UserTableUtil;
+import danandla.model.entities.User;
 import io.jsonwebtoken.Claims;
 
+import javax.ejb.EJB;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -10,6 +13,9 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.annotation.Priority;
 
 @Secured
@@ -17,7 +23,12 @@ import javax.annotation.Priority;
 @Priority(Priorities.AUTHENTICATION)
 public class AuthenticationFilter implements ContainerRequestFilter {
 
+    @EJB
     private final PasswordKitchen passwordKitchen = new PasswordKitchen();
+
+    @EJB
+    UserTableUtil userTableUtil = new UserTableUtil();
+
     private static final String REALM = "example";
     private static final String AUTHENTICATION_SCHEME = "Bearer";
 
@@ -74,5 +85,27 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 "\n issued at: " + parsed.getIssuedAt() +
                 "\n issuer: " + parsed.getIssuer() +
                 "\n subject: " + parsed.getSubject());
+        User found = userTableUtil.getUserByLogin(parsed.getSubject());
+        if(found == null) {
+            System.out.println("user wasn't found");
+            throw new Exception();
+        }
+        if(!found.getToken().equals(token)) {
+            System.out.println("tokens are not equal");
+            throw new Exception();
+        }
+
+        Claims fromDB = passwordKitchen.decodeJWT(found.getToken());
+
+        System.out.println("expired at from db: " + fromDB.getExpiration());
+
+        long nowMillis = System.currentTimeMillis();
+        long expMillis = parsed.getExpiration().getTime();
+        if(expMillis < nowMillis){
+            System.out.println("time expired");
+            throw new Exception();
+        }
+
+
     }
 }

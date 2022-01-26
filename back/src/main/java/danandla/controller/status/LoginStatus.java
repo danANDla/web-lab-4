@@ -8,6 +8,7 @@ public enum LoginStatus {
     REQUEST_ERROR("Request error"),
     BAD_TOKEN("Bad token"),
     UNABLE_TO_INSERT("Unable to insert new user in db"),
+    UNABLE_TO_UPDATE("Unable to update entity"),
     UNDEFINED_ERROR("Undefined error");
 
     private final String description;

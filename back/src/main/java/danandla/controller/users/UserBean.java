@@ -53,12 +53,15 @@ public class UserBean {
             else{
                 resp.setLoginStatus(LoginStatus.NO_USER_FOUND);
             }
-        }
-        if(res){
-            String token = passwordKitchen.createJWT("xd", "archdla", login, 900000L);
-            if(token == null) resp.setLoginStatus(LoginStatus.BAD_TOKEN);
-            else resp.setLoginStatus(LoginStatus.OK); // todo update token in table
-            resp.setJwtToken(token);
+            if(res){
+                String token = passwordKitchen.createJWT("xd", "archdla", login, 900000L);
+                if(token == null) resp.setLoginStatus(LoginStatus.BAD_TOKEN);
+                else {
+                    if(userTableUtil.updateToken(found.getId(), token)) resp.setLoginStatus(LoginStatus.OK); // todo update token in table
+                    else resp.setLoginStatus(LoginStatus.UNABLE_TO_UPDATE);
+                }
+                resp.setJwtToken(token);
+            }
         }
         return resp;
     }

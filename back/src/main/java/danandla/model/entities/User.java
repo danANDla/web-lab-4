@@ -41,7 +41,15 @@ public class User implements Serializable {
 
     public User(){}
 
-//    public User(String login, byte[] password, byte[] salt) {
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    //    public User(String login, byte[] password, byte[] salt) {
 //        this.login = login;
 //        this.password = password;
 //        this.salt = salt;
