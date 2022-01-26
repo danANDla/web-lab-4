@@ -67,9 +67,14 @@ export default {
         x: newPoint.x.toString(),
         y: newPoint.y.toString(),
         r: newPoint.r.toString(),
-        login: this.login,
-        password: this.pass,
+        login: this.login
       }, this.token)
+          .then(response => {
+            if(response.status == 401){
+              this.$router.push({name:"Start"})
+            }
+            return response
+          })
           .then(response => response.json())
           .then(data => {
             console.log(data)
@@ -86,10 +91,13 @@ export default {
     clearData: function(){
       console.log("FUNC: Clear table")
       this.error = ""
-      sendReq('/clear', {
-        login: this.login,
-        password: this.pass,
-      }, this.token)
+      sendReq('/clear', {login: this.login}, this.token)
+          .then(response => {
+            if(response.status == 401){
+              this.$router.push({name:"Start"})
+            }
+            return response
+          })
           .then(response => response.json())
           .then(data => {
             console.log(data)
@@ -104,15 +112,12 @@ export default {
     updatePoints(){
       console.log("FUNC: Update table")
       this.error = ""
-      sendReq('/pointTable', {
-        login: this.login,
-        password: this.pass,
-      }, this.token)
+      sendReq('/pointTable', {login: this.login}, this.token)
           .then(response => {
             if(response.status == 401){
-              console.log("401!!")
               this.$router.push({name:"Start"})
             }
+            return response
           })
           .then(response => response.json())
           .then(data => {
@@ -122,18 +127,12 @@ export default {
     },
     logOut(){
       this.login = "";
-      this.pass = "";
+      this.token = "";
       this.status = "";
       this.$router.push({name: "Start"});
     }
   },
   created() {
-    // if(this.token === "" || this.token === undefined){
-    //   this.$router.push({name:"Start"})
-    // }
-    // if(this.status !== "ok"){
-    //   this.$router.push({name: "Start"});
-    // }
     this.updatePoints();
   }
 }

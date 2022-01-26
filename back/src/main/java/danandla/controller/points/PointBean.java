@@ -36,7 +36,6 @@ public class PointBean {
         try{
             JSONObject recieved = new JSONObject(params);
             login = recieved.getString("login");
-            password = recieved.getString("password");
             res = true;
         } catch (JSONException e){
             System.out.println("bad json");
