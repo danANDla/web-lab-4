@@ -17,6 +17,9 @@
           </div>
         </div>
       </div>
+      <div class="error-msg">
+        {{this.error}}
+      </div>
       <div class="btn-block">
         <usual-button @click.native="signIn">sign in</usual-button>
       </div>
@@ -35,6 +38,9 @@ import UsualButton from "@/components/UI/button";
 export default {
   name: "login",
   components: {UsualButton},
+  props:{
+    error: String
+  },
   data(){
     return{
       login : "",
@@ -45,12 +51,20 @@ export default {
   },
   methods:{
     signIn : function(){
-      if(this.pass !== "" && this.login !== ""){
+      if(this.pass !== "" && this.login !== "" && this.login !== undefined && this.pass !== undefined){
         this.$emit("logIn", this.login, this.pass);
+        document.querySelector('input[type=password]').style.border = "4px solid #ffffff";
+        document.querySelector('input[type=text]').style.border = "4px solid #ffffff";
       }
-      else{
-        console.log("empty");
-        this.error = "empty fields";
+      else {
+        if (this.pass === "" || this.pass === undefined) {
+          console.log("empty");
+          document.querySelector('input[type=password]').style.border = "4px solid #c1364c";
+        }
+        if(this.login === "" || this.login === undefined){
+          console.log("empty");
+          document.querySelector('input[type=text]').style.border = "4px solid #c1364c";
+        }
       }
     },
     signUp: function (){
@@ -77,7 +91,7 @@ export default {
 .wrappers > div{
   display: block;
 }
-.login-text, .pass-text{
+.login-text{
   margin-bottom: 30px;
 }
 .btn-block{
@@ -97,8 +111,15 @@ input {
   font-family: inherit;
   padding: 0.25em 0.5em;
   background-color: #fff;
-  border: 2px solid #ffffff;
+  border: 4px solid #ffffff;
   border-radius: 4px;
   transition: 180ms box-shadow ease-in-out;
+}
+
+.error-msg{
+  color: #c1364c;
+  margin-top: 10px;
+  height: 20px;
+  margin-bottom: 10px;
 }
 </style>

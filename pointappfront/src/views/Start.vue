@@ -6,7 +6,7 @@
     </header>
     <main>
       <div class="content-wrapper">
-        <login @logIn="signIn"></login>
+        <login @logIn="signIn" v-model:error="error"></login>
       </div>
     </main>
 
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import login from "@/components/startCompos/login";
+
 async function sendReq(url, params){
   url = "http://127.0.0.1:8080/web4-1.0/api/login" + url;
   return await fetch(url, {
@@ -33,7 +35,8 @@ export default {
   components: {Login},
   data(){
     return{
-      token: ""
+      token: "",
+      error: "",
     }
   },
   methods: {
@@ -46,6 +49,18 @@ export default {
           .then(data => {
             console.log(data)
             console.log(data.token)
+            if(data.loginStatus === "OK" && data.jwtToken !== ""){
+              this.$router.push({name: "PointApp", params: {status: "ok", token: data.jwtToken, login: Login}});
+            }
+            else if (data.loginStatus === "NO_USER_FOUND"){
+              this.error = "login wasn't found";
+            }
+            else if (data.loginStatus === "WRONG_PASSWORD"){
+              this.error = "incorrect password";
+            }
+            else{
+              this.error = "some_error";
+            }
             // if(data.toString() === "false") {
             //   console.log("Bad response");
             // }

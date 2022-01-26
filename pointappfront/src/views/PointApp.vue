@@ -40,7 +40,8 @@ async function sendReq(url, params){
   return await fetch(url, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json;charset=UTF-8'
+      'Content-Type': 'application/json;charset=UTF-8',
+      'AUTHORIZATION': this.token
     },
     body: JSON.stringify(params)
   })
@@ -56,7 +57,7 @@ export default {
       login: this.$route.params.login,
       pass: this.$route.params.pass,
       status: this.$route.params.status,
-      token: "",
+      token: this.$route.params.token,
       points: [  ]
     }
   },
@@ -122,7 +123,7 @@ export default {
     }
   },
   created() {
-    if(this.token === ""){
+    if(this.token === "" || this.token === undefined){
       this.$router.push({name:"Start"})
     }
     // if(this.status !== "ok"){
