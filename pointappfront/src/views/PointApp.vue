@@ -54,9 +54,8 @@ export default {
   data() {
     return {
       login: this.$route.params.login,
-      pass: this.$route.params.pass,
       status: this.$route.params.status,
-      token: this.$route.params.token,
+      token: this.$store.state.auth.token,
       points: [  ]
     }
   },

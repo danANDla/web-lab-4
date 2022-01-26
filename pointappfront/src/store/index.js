@@ -1,12 +1,8 @@
 import { createStore } from 'vuex'
+import {tokenModule} from "@/store/tokenModule";
 
 export default createStore({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
   modules: {
+    auth: tokenModule
   }
 })
