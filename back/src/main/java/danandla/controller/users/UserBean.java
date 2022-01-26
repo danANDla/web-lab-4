@@ -55,7 +55,7 @@ public class UserBean {
             }
         }
         if(res){
-            String token = passwordKitchen.createJWT("xd", "issuer", "subject", 900000L);
+            String token = passwordKitchen.createJWT("xd", "archdla", login, 900000L);
             if(token == null) resp.setLoginStatus(LoginStatus.BAD_TOKEN);
             else resp.setLoginStatus(LoginStatus.OK);
             resp.setJwtToken(token);

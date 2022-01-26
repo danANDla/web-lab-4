@@ -48,7 +48,6 @@ async function sendReq(url, params, jwt){
 }
 import PointTable from "@/components/appCompos/point-table";
 import PointForm from "@/components/appCompos/point-form";
-import router from "@/router";
 import UsualButton from "@/components/UI/button";
 export default {
   components: {UsualButton, PointForm, PointTable},
@@ -109,6 +108,12 @@ export default {
         login: this.login,
         password: this.pass,
       }, this.token)
+          .then(response => {
+            if(response.status == 401){
+              console.log("401!!")
+              this.$router.push({name:"Start"})
+            }
+          })
           .then(response => response.json())
           .then(data => {
             console.log(data)

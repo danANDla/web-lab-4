@@ -72,6 +72,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         System.out.println("Decoded jwt: \n" + "id: " + parsed.getId() +
                 "\n expiration time: " + parsed.getExpiration() +
                 "\n issued at: " + parsed.getIssuedAt() +
-                "\n issuer: " + parsed.getIssuer());
+                "\n issuer: " + parsed.getIssuer() +
+                "\n subject: " + parsed.getSubject());
     }
 }
