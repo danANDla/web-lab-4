@@ -56,6 +56,7 @@ export default {
       login: this.$route.params.login,
       pass: this.$route.params.pass,
       status: this.$route.params.status,
+      token: "",
       points: [  ]
     }
   },
@@ -121,9 +122,12 @@ export default {
     }
   },
   created() {
-    if(this.status !== "ok"){
-      this.$router.push({name: "Start"});
+    if(this.token === ""){
+      this.$router.push({name:"Start"})
     }
+    // if(this.status !== "ok"){
+    //   this.$router.push({name: "Start"});
+    // }
     this.updatePoints();
   }
 }

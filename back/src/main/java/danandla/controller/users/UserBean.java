@@ -1,5 +1,8 @@
 package danandla.controller.users;
 
+import com.ibm.websphere.security.jwt.JwtToken;
+import danandla.controller.response.LoginResponse;
+import danandla.controller.status.LoginStatus;
 import danandla.model.PasswordKitchen;
 import danandla.model.dbutils.UserTableUtil;
 import danandla.model.entities.User;
@@ -8,7 +11,6 @@ import org.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateful;
-import javax.ws.rs.Path;
 import java.util.Arrays;
 
 @Stateful
@@ -36,8 +38,9 @@ public class UserBean {
         return res;
     }
 
-    public boolean signIn(String params){
+    public LoginResponse signIn(String params){
         boolean res = false;
+        LoginResponse resp = new LoginResponse();
         if(getParams(params)){
             System.out.println("got params" + params);
             User found = userTableUtil.getUserByLogin(login);
@@ -45,12 +48,19 @@ public class UserBean {
                 byte[] recivedHash = passwordKitchen.doHash(password, found.getSalt());
                 byte[] storedHash = found.getPassword();
                 if(Arrays.equals(recivedHash, storedHash)) res = true;
+                else resp.setLoginStatus(LoginStatus.WRONG_PASSWORD);
+            }
+            else{
+                resp.setLoginStatus(LoginStatus.NO_USER_FOUND);
             }
         }
-        else {
-            res = false;
+        if(res){
+            String token = passwordKitchen.createJWT("xd", "issuer", "subject", 900000L);
+            if(token == null) resp.setLoginStatus(LoginStatus.BAD_TOKEN);
+            else resp.setLoginStatus(LoginStatus.OK);
+            resp.setJwtToken(token);
         }
-        return res;
+        return resp;
     }
 
     public boolean signUp(String params){

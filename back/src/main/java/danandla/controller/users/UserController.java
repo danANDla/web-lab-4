@@ -1,5 +1,8 @@
 package danandla.controller.users;
 
+import com.google.gson.Gson;
+import danandla.controller.response.LoginResponse;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.POST;
@@ -16,9 +19,10 @@ public class UserController {
     @POST
     @Path("/signin")
     public Response signIn(String params){
-        boolean answer = userBean.signIn(params);
+        LoginResponse resp = userBean.signIn(params);
+        String answer = new Gson().toJson(resp);
         return javax.ws.rs.core.Response.status(200)
-                .entity(Boolean.toString(answer)).build();
+                .entity(answer).build();
     }
 
     @POST

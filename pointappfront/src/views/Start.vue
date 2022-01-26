@@ -31,6 +31,11 @@ import Login from "@/components/startCompos/login";
 export default {
   name: "Start",
   components: {Login},
+  data(){
+    return{
+      token: ""
+    }
+  },
   methods: {
     signIn: function (Login, Pass){
       sendReq("/signin", {
@@ -40,13 +45,14 @@ export default {
           .then(response => response.json())
           .then(data => {
             console.log(data)
-            if(data.toString() === "false") {
-              console.log("Bad response");
-            }
-            else{
-              console.log("Good response");
-              this.$router.push({name: "PointApp", params: {login: Login, pass: Pass, status: "ok"}});
-            }
+            console.log(data.token)
+            // if(data.toString() === "false") {
+            //   console.log("Bad response");
+            // }
+            // else{
+            //   console.log("Good response");
+            //   this.$router.push({name: "PointApp", params: {login: Login, pass: Pass, status: "ok"}});
+            // }
           });
     }
   }

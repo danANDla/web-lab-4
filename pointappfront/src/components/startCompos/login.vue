@@ -39,7 +39,8 @@ export default {
     return{
       login : "",
       pass : "",
-      status: ""
+      status: "",
+      token: ""
     }
   },
   methods:{
