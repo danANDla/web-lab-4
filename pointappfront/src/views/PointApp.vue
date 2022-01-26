@@ -35,13 +35,13 @@
 <script>
 import login from "../components/startCompos/login";
 
-async function sendReq(url, params){
+async function sendReq(url, params, jwt){
   url = "http://127.0.0.1:8080/web4-1.0/api/pointApp" + url;
   return await fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8',
-      'AUTHORIZATION': this.token
+      'Authorization': 'Bearer ' + jwt
     },
     body: JSON.stringify(params)
   })
@@ -69,8 +69,8 @@ export default {
         y: newPoint.y.toString(),
         r: newPoint.r.toString(),
         login: this.login,
-        password: this.pass
-      })
+        password: this.pass,
+      }, this.token)
           .then(response => response.json())
           .then(data => {
             console.log(data)
@@ -89,8 +89,8 @@ export default {
       this.error = ""
       sendReq('/clear', {
         login: this.login,
-        password: this.pass
-      })
+        password: this.pass,
+      }, this.token)
           .then(response => response.json())
           .then(data => {
             console.log(data)
@@ -107,8 +107,8 @@ export default {
       this.error = ""
       sendReq('/pointTable', {
         login: this.login,
-        password: this.pass
-      })
+        password: this.pass,
+      }, this.token)
           .then(response => response.json())
           .then(data => {
             console.log(data)

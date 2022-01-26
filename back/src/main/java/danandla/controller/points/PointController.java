@@ -32,6 +32,7 @@ public class PointController {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/pointTable")
     public Response getPointsTable(String params){
+        System.out.println("getPointsTable got params:" + params);
         List<NetPoint> table = pointBean.getTable(params);
         String answer = new Gson().toJson(table);
         return Response.status(200)
@@ -41,6 +42,7 @@ public class PointController {
     @POST
     @Path("/add")
     public Response addPoint(String params){
+        System.out.println("addPoint got params:" + params);
         boolean answer = pointBean.insertPoint(params);
         return Response.status(200)
                .entity(Boolean.toString(answer)).build();
@@ -49,6 +51,7 @@ public class PointController {
     @POST
     @Path("/clear")
     public Response clearPointsTable(String params){
+        System.out.println("clearTable got params:" + params);
         pointBean.parseParams(params);
         boolean answer = pointBean.clearTable();
         return Response.status(200)

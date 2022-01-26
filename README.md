@@ -50,6 +50,7 @@
  - https://www.vaadata.com/blog/how-to-securely-store-passwords-in-database/
  - https://www.baeldung.com/java-password-hashing
 ### jwt
+ - https://stackoverflow.com/questions/26777083/how-to-implement-rest-token-based-authentication-with-jax-rs-and-jersey
  - https://habr.com/ru/post/340146/
  - https://developer.okta.com/blog/2018/10/31/jwts-with-java
  - https://antoniogoncalves.org/2016/10/03/securing-jax-rs-endpoints-with-jwt/

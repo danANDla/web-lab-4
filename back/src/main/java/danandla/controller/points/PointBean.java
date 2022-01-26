@@ -45,7 +45,6 @@ public class PointBean {
     }
 
     private boolean getFullParams(String params){
-        System.out.println(params);
         boolean res = false;
         if(getUserParams(params)){
             try{
