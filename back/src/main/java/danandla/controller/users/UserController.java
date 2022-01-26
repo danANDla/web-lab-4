@@ -28,9 +28,10 @@ public class UserController {
     @POST
     @Path("/signup")
     public Response signUp(String params){
-        boolean answer = userBean.signUp(params);
+        LoginResponse resp = userBean.signUp(params);
+        String answer = new Gson().toJson(resp);
         return javax.ws.rs.core.Response.status(200)
-                .entity(Boolean.toString(answer)).build();
+                .entity(answer).build();
     }
 
 }

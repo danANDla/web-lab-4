@@ -6,7 +6,7 @@
     </header>
     <main>
       <div class="content-wrapper">
-        <registrate @regUser="signUp"></registrate>
+        <registrate @regUser="signUp" v-model:error="error"></registrate>
       </div>
     </main>
 
@@ -31,6 +31,11 @@ import Registrate from "@/components/startCompos/registrate";
 export default {
   name: "Registration",
   components: {Registrate},
+  data(){
+    return{
+      error: "",
+    }
+  },
   methods:{
     signUp: function (newLogin, newPass){
       console.log(newPass);
@@ -41,12 +46,23 @@ export default {
           .then(response => response.json())
           .then(data => {
             console.log(data)
-            if(data.toString() === "false") {
-              console.log("Bad response");
+            console.log(data.token)
+            if(data.loginStatus === "OK" && data.jwtToken !== ""){
+              //this.$store.commit('updateToken', data.jwtToken)
+              this.$store.commit('auth/updateToken', data.jwtToken)
+              this.$router.push({name: "PointApp", params: {status: "ok", login: newLogin}});
+            }
+            else if (data.loginStatus === "USER_ALREADY_EXISTS"){
+              this.error = "this login is taken";
+            }
+            else if (data.loginStatus === "WRONG_PASSWORD"){
+              this.error = "incorrect password";
+            }
+            else if (data.loginStatus === "UNABLE_TO_INSERT"){
+              this.error = "can't insert user in db";
             }
             else{
-              console.log("Good response");
-              this.$router.push({name: "PointApp", params: {login: newLogin, pass: newPass, status: "ok"}});
+              this.error = "unknown error";
             }
           });
     }

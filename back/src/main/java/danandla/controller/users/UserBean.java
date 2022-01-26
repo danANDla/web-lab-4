@@ -63,8 +63,9 @@ public class UserBean {
         return resp;
     }
 
-    public boolean signUp(String params){
+    public LoginResponse signUp(String params){
         boolean res = false;
+        LoginResponse resp = new LoginResponse();
         if(getParams(params)){
             System.out.println("got params" + params);
             if(userTableUtil.getUserByLogin(login) == null){
@@ -73,14 +74,21 @@ public class UserBean {
                 System.out.println("generated hash " + Arrays.toString(newPass));
                 if(newPass != null){
                     String token = passwordKitchen.createJWT("xd", "archdla", login, 900000L);
-                    User newUser = new User(login, newPass, newSalt, token);
-                    res = userTableUtil.insertUser(newUser);
+                    if(token == null) resp.setLoginStatus(LoginStatus.BAD_TOKEN);
+                    else {
+                        User newUser = new User(login, newPass, newSalt, token);
+                        resp.setLoginStatus(LoginStatus.OK); // todo update token in table
+                        resp.setJwtToken(token);
+                        res = userTableUtil.insertUser(newUser);
+                        if(!res) resp.setLoginStatus(LoginStatus.UNABLE_TO_INSERT);
+                    }
                 }
             }
             else{
                 System.out.println("user with this login already exists");
+                resp.setLoginStatus(LoginStatus.USER_ALREADY_EXISTS);
             }
         }
-        return res;
+        return resp;
     }
 }
