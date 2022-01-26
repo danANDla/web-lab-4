@@ -52,7 +52,8 @@ export default {
             if(data.loginStatus === "OK" && data.jwtToken !== ""){
               //this.$store.commit('updateToken', data.jwtToken)
               this.$store.commit('auth/updateToken', data.jwtToken)
-              this.$router.push({name: "PointApp", params: {status: "ok", login: Login}});
+              this.$store.commit('auth/updateLogin', Login)
+              this.$router.push({name: "PointApp", params: {status: "ok"}});
             }
             else if (data.loginStatus === "NO_USER_FOUND"){
               this.error = "login wasn't found";

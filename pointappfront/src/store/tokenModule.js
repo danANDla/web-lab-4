@@ -1,6 +1,7 @@
 export const tokenModule = {
     state: () => ({
-        token: ""
+        token: "",
+        login: ""
     }),
     getters: {
 
@@ -8,6 +9,9 @@ export const tokenModule = {
     mutations: {
         updateToken(state, newToken){
             state.token = newToken
+        },
+        updateLogin(state, newLogin){
+            state.login = newLogin
         }
     },
     actions: {

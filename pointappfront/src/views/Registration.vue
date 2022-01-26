@@ -50,7 +50,8 @@ export default {
             if(data.loginStatus === "OK" && data.jwtToken !== ""){
               //this.$store.commit('updateToken', data.jwtToken)
               this.$store.commit('auth/updateToken', data.jwtToken)
-              this.$router.push({name: "PointApp", params: {status: "ok", login: newLogin}});
+              this.$store.commit('auth/updateLogin', newLogin)
+              this.$router.push({name: "PointApp", params: {status: "ok"}});
             }
             else if (data.loginStatus === "USER_ALREADY_EXISTS"){
               this.error = "this login is taken";

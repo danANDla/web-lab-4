@@ -53,9 +53,9 @@ export default {
   components: {UsualButton, PointForm, PointTable},
   data() {
     return {
-      login: this.$route.params.login,
       status: this.$route.params.status,
       token: this.$store.state.auth.token,
+      login: this.$store.state.auth.login,
       points: [  ]
     }
   },
