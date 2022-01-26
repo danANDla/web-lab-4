@@ -1,6 +1,7 @@
 package danandla.controller.points;
 
 import com.google.gson.Gson;
+import danandla.controller.filter.Secured;
 import danandla.model.NetPoint;
 
 import javax.ejb.EJB;
@@ -29,6 +30,7 @@ public class PointController {
     }
 
     @POST
+    @Secured
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/pointTable")
     public Response getPointsTable(String params){

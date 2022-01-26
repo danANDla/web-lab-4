@@ -123,9 +123,9 @@ export default {
     }
   },
   created() {
-    if(this.token === "" || this.token === undefined){
-      this.$router.push({name:"Start"})
-    }
+    // if(this.token === "" || this.token === undefined){
+    //   this.$router.push({name:"Start"})
+    // }
     // if(this.status !== "ok"){
     //   this.$router.push({name: "Start"});
     // }
