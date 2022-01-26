@@ -70,17 +70,21 @@ public class PointTableUtil{
         return resp;
     }
 
-    public boolean clearTable(){
+    public boolean clearTable(long userId){
         boolean res = false;
         try{
             initconnect();
             tr.begin();
-            em.createQuery("delete from Point c", Point.class).executeUpdate();
+            Query query = em.createQuery("delete from Point c where c.userid=:userId", Point.class);
+            System.out.println("Clear table of user with id " + userId);
+            query.setParameter("userId", userId);
+            query.executeUpdate();
             tr.commit();
             em.close();
             res = true;
         }
         catch (RuntimeException e){
+            System.out.println("Exception was handled in the clearPoint");
             if(tr.isActive()) tr.rollback();
         }
         return res;

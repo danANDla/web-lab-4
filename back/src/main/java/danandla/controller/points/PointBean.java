@@ -88,8 +88,16 @@ public class PointBean {
         return res;
     }
 
-    public boolean clearTable(){
-        return pointTableUtil.clearTable();
+    public boolean clearTable(String params, String jwt){
+        boolean res = false;
+        if(getLogin(jwt)){
+            System.out.println("getPointsTable got params:" + params + "; login from jwt: " + login);
+            User found = userTableUtil.getUserByLogin(login);
+            if(found!=null){
+                res = pointTableUtil.clearTable(found.getId());
+            }
+        }
+        return res;
     }
 
     public void parseParams(String params){

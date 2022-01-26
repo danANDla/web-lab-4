@@ -51,7 +51,7 @@ public class PointController {
     @Path("/clear")
     public Response clearPointsTable(String params, @HeaderParam("Authorization") String jwt){
         pointBean.parseParams(params);
-        boolean answer = pointBean.clearTable();
+        boolean answer = pointBean.clearTable(params, jwt);
         return Response.status(200)
                 .entity(Boolean.toString(answer)).build();
     }
