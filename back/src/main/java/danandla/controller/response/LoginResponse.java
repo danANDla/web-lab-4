@@ -1,8 +1,5 @@
 package danandla.controller.response;
 
-import com.ibm.websphere.security.jwt.JwtToken;
-import danandla.controller.status.LoginStatus;
-
 public class LoginResponse {
     private LoginStatus loginStatus;
     private String jwtToken;

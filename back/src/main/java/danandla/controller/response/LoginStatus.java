@@ -1,4 +1,4 @@
-package danandla.controller.status;
+package danandla.controller.response;
 
 public enum LoginStatus {
     OK("ok"),

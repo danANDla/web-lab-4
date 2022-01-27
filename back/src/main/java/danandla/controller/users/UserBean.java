@@ -1,8 +1,7 @@
 package danandla.controller.users;
 
-import com.ibm.websphere.security.jwt.JwtToken;
 import danandla.controller.response.LoginResponse;
-import danandla.controller.status.LoginStatus;
+import danandla.controller.response.LoginStatus;
 import danandla.model.PasswordKitchen;
 import danandla.model.dbutils.UserTableUtil;
 import danandla.model.entities.User;
