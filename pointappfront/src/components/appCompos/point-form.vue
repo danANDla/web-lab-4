@@ -1,6 +1,6 @@
 <template>
   <div>
-    <point-canvas ref="canvasComponent"></point-canvas>
+    <point-canvas ref="canvasComponent" @pointFromMouse="sendFromMouse"></point-canvas>
     <form v-on:submit.prevent>
       <div class="x-radio">
         <div class="wrappers">
@@ -70,6 +70,14 @@ export default {
     },
     sendData: function (){
       this.$emit('pushPoint', this.newPoint);
+    },
+    sendFromMouse: function(newX, newY, newR){
+      let fromMouse = {
+        x: newX,
+        y: newY,
+        r: newR
+      };
+      this.$emit('pushPoint', fromMouse);
     },
     clearData: function (){
       this.$emit('clearPoints')

@@ -119,11 +119,12 @@ export default {
         posy = parseFloat(posy);
         let offsetx = (this.canvas.width * 150) / 300;
         let offsety = (this.canvas.height * 150) / 300;
-        this.xsend = (posx - offsetx) * radius * 300 / (107 * this.canvas.width);
-        this.ysend = -(posy - offsety) * radius * 300 / (107 * this.canvas.width);
-        console.log(this.xsend, this.ysend);
+        let xsend = (posx - offsetx) * radius * 300 / (107 * this.canvas.width);
+        let ysend = -(posy - offsety) * radius * 300 / (107 * this.canvas.width);
+        console.log(xsend, ysend);
         this.canvasflag = true;
         this.draw(posx, posy, "#000000");
+        this.$emit('pointFromMouse', xsend, ysend, radius)
       }
     },
   },

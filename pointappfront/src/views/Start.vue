@@ -50,7 +50,6 @@ export default {
             console.log(data)
             console.log(data.token)
             if(data.loginStatus === "OK" && data.jwtToken !== ""){
-              //this.$store.commit('updateToken', data.jwtToken)
               this.$store.commit('auth/updateToken', data.jwtToken)
               this.$store.commit('auth/updateLogin', Login)
               this.$router.push({name: "PointApp", params: {status: "ok"}});
