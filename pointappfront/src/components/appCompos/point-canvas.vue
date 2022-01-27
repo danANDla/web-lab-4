@@ -1,8 +1,8 @@
 <template>
   <div class="imageCell">
-      <div class="svg-container">
-        <canvas id="responsive-canvas"></canvas>
-      </div>
+    <div class="svg-container">
+      <canvas id="responsive-canvas"></canvas>
+    </div>
   </div>
 </template>
 
@@ -14,13 +14,14 @@ export default {
       img_src: "",
       ctx: undefined,
       canvas: undefined,
+      points: this.$store.state.array.points,
       x: 0,
       y: 0,
-      points: []
+      r: 0
     }
   },
   methods: {
-    init: function(newR) {
+    init: function (newR) {
       this.canvas = document.getElementById("responsive-canvas");
       const lctx = this.canvas.getContext("2d");
 
@@ -48,34 +49,54 @@ export default {
           break;
       }
       img.src = this.img_src;
-      console.log(img.src)
       let width = this.canvas.width;
       let height = this.canvas.height;
       img.onload = function () {
         lctx.drawImage(img, 0, 0, width, height);
       }
-      //this.drawAll();
+      this.r = newR
+      this.drawAll();
+    },
+    redraw: function() {
+      this.canvas = document.getElementById("responsive-canvas");
+      const lctx = this.canvas.getContext("2d");
+      let heightRatio = 1;
+      this.canvas.height = this.canvas.width * heightRatio;
+      let img = new Image();
+      if(this.img_src === undefined) this.img_src = require("@/assets/img/r.jpg");
+      img.src = this.img_src;
+      let width = this.canvas.width;
+      let height = this.canvas.height;
+      img.onload = function () {
+        lctx.drawImage(img, 0, 0, width, height);
+      }
     },
     drawAll: function () {
+      this.points = this.$store.state.array.points;
       this.points.forEach(point => {
         if (point.r == this.r) {
-          var color = point.hit ? "#59ab42" : "#ab2a3d";
-          this.draw(point.x, point.r, color);
+          let offsetx = (this.canvas.width * 150) / 300;
+          let offsety = (this.canvas.height * 150) / 300;
+          let posx = offsetx + point.x / this.r * 107 / 300 * this.canvas.width;
+          let posy = offsety - point.y / this.r * 107 / 300 * this.canvas.width;
+          let color = point.hit ? "#59ab42" : "#ab2a3d";
+          this.draw(posx, posy, color);
         }
       })
     },
     draw: function (posx, posy, color) {
+      console.log("Draw point: ", posx, posy, color)
+      const lctx = this.canvas.getContext("2d");
       var radius = this.r;
-      console.log("Draw", posx, posy, radius);
       let img = new Image();
       if (this.img_src === undefined) this.img_src = "../../assets/img/r.jpg";
       img.src = this.img_src;
       img.onload = function () {
-        this.ctx.fillStyle = color;
-        this.ctx.beginPath();
-        this.ctx.arc(posx, posy, 2, 0, 2 * Math.PI);
-        this.ctx.fill();
-        this.ctx.closePath();
+        lctx.fillStyle = color;
+        lctx.beginPath();
+        lctx.arc(posx, posy, 2, 0, 2 * Math.PI);
+        lctx.fill();
+        lctx.closePath();
       }
     },
     mouse: function (e) {
@@ -152,6 +173,7 @@ export default {
   background: white;
   width: 100%;
 }
+
 .svg-container {
   display: inline-block;
   position: relative;

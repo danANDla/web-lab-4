@@ -18,7 +18,7 @@
     <main>
       <div class="content-wrapper">
         <div class="form-block">
-          <point-form @pushPoint="sendData" @clearPoints="clearData"></point-form>
+          <point-form @pushPoint="sendData" @clearPoints="clearData" ref="forma"></point-form>
         </div>
 
         <div class="response-block">
@@ -105,6 +105,7 @@ export default {
             }
             else{
               this.updatePoints();
+              this.$refs.forma.updateCanvas();
             }
           });
     },
