@@ -26,12 +26,7 @@
 <script>
 export default {
   name: "point-table",
-  props:{
-    points:{
-      type: Array,
-      required: true
-    }
-  },
+  props: ['points'],
   methods:{
     scrollToEnd: function() {
       var container = document.querySelector("#scrollBody");

@@ -22,7 +22,7 @@
         </div>
 
         <div class="response-block">
-          <point-table v-bind:points="points"></point-table>
+          <point-table  v-bind:points="points"></point-table>
         </div>
       </div>
     </main>
@@ -46,6 +46,7 @@ async function sendReq(url, params, jwt){
     body: JSON.stringify(params)
   })
 }
+
 import PointTable from "@/components/appCompos/point-table";
 import PointForm from "@/components/appCompos/point-form";
 import UsualButton from "@/components/UI/button";
@@ -56,7 +57,7 @@ export default {
       status: this.$route.params.status,
       token: this.$store.state.auth.token,
       login: this.$store.state.auth.login,
-      points: [  ]
+      points: this.$store.state.array.points
     }
   },
   methods:{
@@ -120,7 +121,8 @@ export default {
           .then(response => response.json())
           .then(data => {
             console.log(data)
-            this.points = data
+            this.$store.commit('array/updatePoints', data)
+            this.points = this.$store.state.array.points
           });
     },
     logOut(){

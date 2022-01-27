@@ -9,38 +9,25 @@
 <script>
 export default {
   name: "point-canvas",
-  props: {
-    r: Number,
-    points: {
-      type: Array,
-      default: function(){
-        return [];
-      }
-    }
-  },
   data() {
     return {
       img_src: "",
       ctx: undefined,
       canvas: undefined,
-      xsend: undefined,
-      ysend: undefined,
       x: 0,
       y: 0,
       points: []
     }
   },
   methods: {
-    init: function() {
+    init: function(newR) {
       this.canvas = document.getElementById("responsive-canvas");
-      var lctx = this.canvas.getContext("2d");
+      const lctx = this.canvas.getContext("2d");
 
-      var radius = this.r;
-      console.log("init canvas", radius);
       let heightRatio = 1;
       this.canvas.height = this.canvas.width * heightRatio;
       let img = new Image();
-      switch (parseInt(radius.toString())) {
+      switch (parseInt(newR)) {
         case 0:
           this.img_src = require("@/assets/img/0.jpg");
           break;
@@ -114,6 +101,9 @@ export default {
       return {x: mouseX, y: mouseY};
     }
   },
+  mounted() {
+    this.init(0)
+  }
   // mounted() {
   //     this.canvas = document.getElementById("responsive-canvas");
   //     var lctx = this.canvas.getContext("2d");

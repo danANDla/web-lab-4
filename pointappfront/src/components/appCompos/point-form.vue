@@ -1,6 +1,6 @@
 <template>
   <div>
-    <point-canvas v-model:points="points" v-model:r="newPoint.r" ref="canvasComponent"></point-canvas>
+<!--    <point-canvas ref="canvasComponent"></point-canvas>-->
     <form v-on:submit.prevent>
       <div class="x-radio">
         <div class="wrappers">
@@ -59,7 +59,7 @@ export default {
     },
     changeRRadioBtn: function (newR){
       this.newPoint.r = newR;
-      this.$refs.canvasComponent.init();
+      this.$refs.canvasComponent.init(newR.toString());
     },
     sendData: function (){
       this.$emit('pushPoint', this.newPoint);
