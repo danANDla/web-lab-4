@@ -64,6 +64,10 @@ export default {
     updateCanvas: function(){
       this.$refs.canvasComponent.redraw();
     },
+    drawNew: function(newX, newY, newHit){
+      let color = newHit ? "#59ab42" : "#ab2a3d";
+      this.$refs.canvasComponent.drawFromCoordinates(newX, newY, color)
+    },
     sendData: function (){
       this.$emit('pushPoint', this.newPoint);
     },
