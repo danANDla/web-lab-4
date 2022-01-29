@@ -81,10 +81,8 @@ export default {
               console.log("Bad response");
             }
             else{
-              let result;
-              result = data.toString() === "hit";
-              this.$refs.forma.drawNew(newPoint.x, newPoint.y, result);
               this.updatePoints();
+              this.$refs.forma.drawNew(newPoint.x, newPoint.y, result);
             }
           });
     },

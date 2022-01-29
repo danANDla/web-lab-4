@@ -5,7 +5,7 @@
       <div class="x-radio">
         <div class="wrappers">
           <div class="value-label">X</div>
-          <radio-btn @radioChange="changeXRadioBtn" ref="xComponent"></radio-btn>
+          <radio-btn-x @radioChange="changeXRadioBtn" ref="xComponent"></radio-btn-x>
         </div>
       </div>
 
@@ -18,7 +18,7 @@
       <div class="r-radio">
         <div class="wrappers">
           <div class="value-label">R</div>
-          <radio-btn @radioChange="changeRRadioBtn" ref="rComponent"></radio-btn>
+          <radio-btn-r @radioChange="changeRRadioBtn" ref="rComponent"></radio-btn-r>
         </div>
       </div>
 
@@ -31,26 +31,33 @@
           <usual-button @click.native="clearData" btn-type="dangerous">clear</usual-button>
         </div>
       </div>
+
+      <div class="error-block" v-if="errorShow">
+        {{this.error}}
+      </div>
     </form>
   </div>
 </template>
 
 <script>
 import UsualButton from "@/components/UI/button";
-import RadioBtn from "@/components/UI/radio-btn";
 import pointCanvas from "@/components/appCompos/point-canvas";
+import RadioBtnX from "@/components/UI/radio-btn-x";
+import RadioBtnR from "@/components/UI/radio-btn-r";
 
 export default {
   name: "point-form",
-  components: {RadioBtn, UsualButton, pointCanvas},
+  components: {RadioBtnX, RadioBtnR, UsualButton, pointCanvas},
   data(){
     return{
       newPoint: {
         x: 0,
         y: 0,
-        r: 0,
+        r: 1,
       },
-      points: [  ]
+      points: [  ],
+      error: "",
+      errorShow: false
     }
   },
   methods:{
@@ -69,7 +76,18 @@ export default {
       this.$refs.canvasComponent.drawFromCoordinates(newX, newY, color)
     },
     sendData: function (){
-      this.$emit('pushPoint', this.newPoint);
+      if(this.check()) this.$emit('pushPoint', this.newPoint);
+    },
+    check: function (){
+      let valid = ((this.newPoint.y.match(/^[0-2](\.\d+)?$/) || this.newPoint.y.match(/^-[0-4](\.\d+)?$/)
+          || this.newPoint.y.match(/^-5$/) || this.newPoint.y.match(/^3$/)) && !this.newPoint.y.match(/^-?0(\.0+)?$/));
+      if(!valid) this.showError("Y should be a number from [-5;3]")
+      else this.errorShow = false
+      return valid
+    },
+    showError: function (msg){
+        this.error = msg;
+        this.errorShow = true;
     },
     sendFromMouse: function(newX, newY, newR){
       let fromMouse = {
@@ -85,7 +103,6 @@ export default {
     resetForm: function (){
       this.newPoint.x = 0;
       this.newPoint.y = 0;
-      this.newPoint.r = 0;
       this.newPoint.hit = 0;
       this.$refs.xComponent.resetChoice();
       this.$refs.rComponent.resetChoice();
@@ -133,4 +150,14 @@ export default {
   margin: 0;
 }
 
+.error-block{
+  margin-top: 5px;
+  display: block;
+  width: 100%;
+  background: #202020;
+  padding: 10px;
+  text-align: center;
+  color: #c1364c;
+  font-weight: 600;
+}
 </style>

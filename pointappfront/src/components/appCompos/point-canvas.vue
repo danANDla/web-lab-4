@@ -17,7 +17,7 @@ export default {
       points: this.$store.state.array.points,
       x: 0,
       y: 0,
-      r: 0,
+      r: 1,
     }
   },
   methods: {
@@ -129,7 +129,7 @@ export default {
     },
   },
   mounted() {
-    this.init(0)
+    this.init(1)
   }
 }
 

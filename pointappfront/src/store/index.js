@@ -9,13 +9,13 @@ export default createStore({
     auth: tokenModule,
     array: pointsModule
   },
-  // plugins: [
-  //   createPersistedState({
+  plugins: [
+    createPersistedState({
   // //     storage:{
   // //       getState: (key) => Cookies.getJSON(key),
   // //       setState: (key, state) => Cookies.set(key, state, { expires: 3, secure: true })
   // //     }
-  //     storage: window.sessionStorage
-  //   })
-  // ]
+      storage: window.sessionStorage
+    })
+  ]
 })
