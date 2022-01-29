@@ -19,6 +19,9 @@
       <div class="content-wrapper">
         <div class="form-block">
           <point-form @pushPoint="sendData" @clearPoints="clearData" ref="forma"></point-form>
+          <div class="error-block" v-if="errorShow">
+            {{this.error}}
+          </div>
         </div>
 
         <div class="response-block">
@@ -57,7 +60,9 @@ export default {
       status: this.$route.params.status,
       token: this.$store.state.auth.token,
       login: this.$store.state.auth.login,
-      points: this.$store.state.array.points
+      points: this.$store.state.array.points,
+      error: "",
+      errorShow: false
     }
   },
   methods:{
@@ -66,7 +71,8 @@ export default {
       sendReq("/add", {
         x: newPoint.x.toString(),
         y: newPoint.y.toString(),
-        r: newPoint.r.toString()
+        r: newPoint.r.toString(),
+        isMouse: newPoint.isMouse.toString()
       }, this.token)
           .then(response => {
             if(response.status == 401){
@@ -80,7 +86,13 @@ export default {
             if(data === "false") {
               console.log("Bad response");
             }
+            else if(data === "invalid"){
+              console.log("invalid values")
+              this.error = "server has received invalid values"
+              this.errorShow = true
+            }
             else{
+              this.errorShow = false
               this.updatePoints();
               this.$refs.forma.drawNew(newPoint.x, newPoint.y, data);
             }
@@ -205,5 +217,16 @@ main{
 
 .dropdown:hover{
   background-color: #343434;
+}
+
+.error-block{
+  margin-top: 5px;
+  display: block;
+  width: 100%;
+  background: #202020;
+  padding: 10px;
+  text-align: center;
+  color: #c1364c;
+  font-weight: 600;
 }
 </style>

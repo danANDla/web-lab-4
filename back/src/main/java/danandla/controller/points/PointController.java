@@ -42,6 +42,7 @@ public class PointController {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/add")
     public Response addPoint(String params, @HeaderParam("Authorization") String jwt){
+        System.out.println("received params: " + params);
         String res = pointBean.insertPoint(params, jwt);
         String answer = new Gson().toJson(res);
         return Response.status(200)

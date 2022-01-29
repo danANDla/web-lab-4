@@ -18,6 +18,7 @@ import java.time.format.FormatStyle;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 @Stateless
 public class PointBean {
@@ -49,10 +50,13 @@ public class PointBean {
         if(getLogin(jwt)){
             try{
                 JSONObject recieved = new JSONObject(params);
-                x = Float.parseFloat(recieved.getString("x"));
-                y = Float.parseFloat(recieved.getString("y"));
-                r = Float.parseFloat(recieved.getString("r"));
-                res = true;
+                if (validate(recieved.getString("x"), recieved.getString("y"), recieved.getString("r"),
+                        recieved.getString("isMouse"))){
+                    x = Float.parseFloat(recieved.getString("x"));
+                    y = Float.parseFloat(recieved.getString("y"));
+                    r = Float.parseFloat(recieved.getString("r"));
+                    res = true;
+                }
             } catch (JSONException e){
                 System.out.println("bad json");
             }
@@ -85,6 +89,9 @@ public class PointBean {
                 if(pointTableUtil.insertPoint(newPoint)) res = newPoint.isHit() ? "hit" : "nohit";
             }
         }
+        else{
+            res = "invalid";
+        }
         return res;
     }
 
@@ -104,7 +111,50 @@ public class PointBean {
         System.out.println(params);
     }
 
-    public boolean areaCheck(float x, float y, float r){
+    private boolean validate(String x, String y, String r, String isMouse){
+        boolean xflag = false;
+        boolean yflag = false;
+        boolean rflag = false;
+        if(!Objects.equals(isMouse, "true")){
+            if(x==null || y==null || r==null){
+                ;
+            }
+            else{
+                if(!y.matches("-?0{1}(\\.0+)?")&&(y.matches("-[0-4]{1}(\\.\\d+)?") ||
+                        y.matches("-?[0-2]{1}(\\.\\d+)?") || y.matches("-?3{1}") || y.matches("-5{1}"))
+                        || (y.matches("0{1}(\\.0+)?"))){
+                    yflag = true;
+                }
+                if(x.matches("-?4{1}") || x.matches("-?3{1}") || x.matches("-?2{1}") || x.matches("-?1{1}")
+                        || x.matches("0{1}")){
+                    xflag = true;
+                }
+                if(r.matches("[1-4]{1}")){
+                    rflag = true;
+                }
+            }
+            return xflag && yflag && rflag;
+        }
+        else{
+            if(x==null || y==null || r==null){
+                ;
+            }
+            else{
+                if(!x.matches("-?0{1}(\\.0+)?")&&(x.matches("-?[0-8]{1}(\\.\\d+)?") || x.matches("-?9{1}")) ){
+                    xflag = true;
+                }
+                if(!y.matches("-?0{1}(\\.0+)?")&&(y.matches("-?[0-8]{1}(\\.\\d+)?") || y.matches("-?9{1}")) ){
+                    yflag = true;
+                }
+                if(r.matches("[1-4]{1}")){
+                    rflag = true;
+                }
+            }
+            return xflag && yflag && rflag;
+        }
+    }
+
+    private boolean areaCheck(float x, float y, float r){
         boolean rect = false;
         boolean circle = false;
         boolean triangle = false;
