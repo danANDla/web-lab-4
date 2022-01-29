@@ -70,19 +70,35 @@ export default {
       img.onload = function () {
         lctx.drawImage(img, 0, 0, width, height);
       }
+      this.drawAll()
     },
     drawAll: function () {
       this.points = this.$store.state.array.points;
-      this.points.forEach(point => {
-        if (point.r == this.r) {
-          let offsetx = (this.canvas.width * 150) / 300;
-          let offsety = (this.canvas.height * 150) / 300;
-          let posx = offsetx + point.x / this.r * 107 / 300 * this.canvas.width;
-          let posy = offsety - point.y / this.r * 107 / 300 * this.canvas.width;
-          let color = point.hit ? "#59ab42" : "#ab2a3d";
-          this.draw(posx, posy, color);
-        }
-      })
+      let array = this.points
+      const lctx = this.canvas.getContext("2d");
+      let img = new Image();
+      if (this.img_src === undefined) this.img_src = "../../assets/img/r.jpg";
+      img.src = this.img_src;
+      let w = this.canvas.width;
+      let h = this.canvas.height;
+      let radius = this.r;
+      img.onload = function (){
+        array.forEach(point => {
+          if (point.r == radius) {
+            let offsetx = (w * 150) / 300;
+            let offsety = (h * 150) / 300;
+            let posx = offsetx + point.x / radius * 107 / 300 * w;
+            let posy = offsety - point.y / radius * 107 / 300 * w;
+            let color = point.hit ? "#59ab42" : "#ab2a3d";
+            console.log("Draw point: ", posx, posy, color)
+            lctx.fillStyle = color;
+            lctx.beginPath();
+            lctx.arc(posx, posy, 2, 0, 2 * Math.PI);
+            lctx.fill();
+            lctx.closePath();
+          }
+        })
+      }
     },
     draw: function (posx, posy, color) {
       console.log("Draw point: ", posx, posy, color)
@@ -129,7 +145,10 @@ export default {
     },
   },
   mounted() {
-    this.init(1)
+    this.init(this.r)
+  },
+  updated() {
+    this.init(this.r)
   }
 }
 

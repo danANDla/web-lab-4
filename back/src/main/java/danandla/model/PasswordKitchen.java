@@ -113,7 +113,7 @@ public class PasswordKitchen {
         return builder.compact();
     }
 
-    public Claims decodeJWT(String jwt) {
+    public Claims decodeJWT(String jwt) throws Exception{
         //This line will throw an exception if it is not a signed JWS (as expected)
         Claims claims = Jwts.parser()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(getKey()))
