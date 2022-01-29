@@ -142,6 +142,8 @@ export default {
       this.token = "";
       this.status = "";
       this.$store.commit('array/updatePoints', [])
+      this.$store.commit('auth/updateToken', "")
+      this.$store.commit('auth/updateLogin', "")
       this.$router.push({name: "Start"});
     }
   },
