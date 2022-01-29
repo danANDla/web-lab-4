@@ -130,8 +130,6 @@ export default {
         let mouseY = e.offsetY * this.canvas.height / this.canvas.clientHeight | 0;
         let posx = mouseX;
         let posy = mouseY;
-        posx = parseFloat(posx);
-        posy = parseFloat(posy);
         let offsetx = (this.canvas.width * 150) / 300;
         let offsety = (this.canvas.height * 150) / 300;
         let xsend = (posx - offsetx) * radius * 300 / (107 * this.canvas.width);

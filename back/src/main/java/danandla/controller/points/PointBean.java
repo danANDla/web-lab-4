@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-@Stateful
+@Stateless
 public class PointBean {
     @EJB
     private final PointTableUtil pointTableUtil = new PointTableUtil();

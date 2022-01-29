@@ -9,10 +9,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import java.util.Arrays;
 
-@Stateful
+@Stateless
 public class UserBean {
 
     @EJB

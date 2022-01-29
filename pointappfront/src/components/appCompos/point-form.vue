@@ -79,8 +79,11 @@ export default {
       if(this.check()) this.$emit('pushPoint', this.newPoint);
     },
     check: function (){
-      let valid = ((this.newPoint.y.match(/^[0-2](\.\d+)?$/) || this.newPoint.y.match(/^-[0-4](\.\d+)?$/)
-          || this.newPoint.y.match(/^-5$/) || this.newPoint.y.match(/^3$/)) && !this.newPoint.y.match(/^-?0(\.0+)?$/));
+      // let valid = ((this.newPoint.y.match(/^[0-2](\.\d+)?$/) || this.newPoint.y.match(/^-[0-4](\.\d+)?$/)
+      //     || this.newPoint.y.match(/^-5$/) || this.newPoint.y.match(/^3$/) || this.newPoint.y.match(/^0$/))
+      //     && !this.newPoint.y.match(/^-?0(\.0+)?$/));
+      let valid = !(this.newPoint.y.valueOf() > 3 || this.newPoint.y.valueOf() < -5
+          || isNaN(this.newPoint.y) || this.newPoint.y === "")
       if(!valid) this.showError("Y should be a number from [-5;3]")
       else this.errorShow = false
       return valid
