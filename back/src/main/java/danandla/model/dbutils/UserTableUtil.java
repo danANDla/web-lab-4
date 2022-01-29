@@ -28,7 +28,7 @@ public class UserTableUtil {
         }
         catch (RuntimeException e){
             System.out.println("Exception was handled in the insertUser");
-            if(tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
+            if(tr!=null && tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
         }
         return resp;
     }
@@ -44,7 +44,7 @@ public class UserTableUtil {
         }
         catch (RuntimeException e){
             System.out.println("Exception was handled in the getPointsTable: " + e);
-            if(tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
+            if(tr!=null && tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
         }
         return null;
     }
@@ -68,7 +68,7 @@ public class UserTableUtil {
         }
         catch (RuntimeException e){
             System.out.println("Exception was handled in the updateToken: " + e);
-            if(tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
+            if(tr!=null && tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
             return false;
         }
     }

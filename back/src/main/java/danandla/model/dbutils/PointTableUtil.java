@@ -48,7 +48,7 @@ public class PointTableUtil{
         }
         catch (RuntimeException e){
             System.out.println("Exception was handled in the getPointsTable: " + e);
-            if(tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
+            if(tr!=null && tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
         }
         return Collections.emptyList();
     }
@@ -65,7 +65,7 @@ public class PointTableUtil{
         }
         catch (RuntimeException e){
             System.out.println("Exception was handled in the insertPoint");
-            if(tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
+            if(tr!=null && tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
         }
         return resp;
     }
@@ -86,6 +86,7 @@ public class PointTableUtil{
         catch (RuntimeException e){
             System.out.println("Exception was handled in the clearPoint");
             if(tr.isActive()) tr.rollback();
+            if(tr!=null && tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
         }
         return res;
     }
