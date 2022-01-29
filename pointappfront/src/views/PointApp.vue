@@ -129,6 +129,7 @@ export default {
       this.login = "";
       this.token = "";
       this.status = "";
+      this.$store.commit('array/updatePoints', [])
       this.$router.push({name: "Start"});
     }
   },
