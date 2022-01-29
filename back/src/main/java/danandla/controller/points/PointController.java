@@ -39,11 +39,13 @@ public class PointController {
 
     @POST
     @Secured
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/add")
     public Response addPoint(String params, @HeaderParam("Authorization") String jwt){
-        boolean answer = pointBean.insertPoint(params, jwt);
+        String res = pointBean.insertPoint(params, jwt);
+        String answer = new Gson().toJson(res);
         return Response.status(200)
-               .entity(Boolean.toString(answer)).build();
+               .entity(answer).build();
     }
 
     @POST

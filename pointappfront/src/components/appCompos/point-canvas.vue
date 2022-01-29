@@ -70,7 +70,6 @@ export default {
       img.onload = function () {
         lctx.drawImage(img, 0, 0, width, height);
       }
-      this.drawAll()
     },
     drawAll: function () {
       this.points = this.$store.state.array.points;
@@ -145,9 +144,6 @@ export default {
     },
   },
   mounted() {
-    this.init(this.r)
-  },
-  updated() {
     this.init(this.r)
   }
 }

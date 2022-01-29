@@ -77,12 +77,12 @@ export default {
           .then(response => response.json())
           .then(data => {
             console.log(data)
-            if(data.toString() === "false") {
+            if(data === "false") {
               console.log("Bad response");
             }
             else{
               this.updatePoints();
-              this.$refs.forma.drawNew(newPoint.x, newPoint.y, result);
+              this.$refs.forma.drawNew(newPoint.x, newPoint.y, data);
             }
           });
     },

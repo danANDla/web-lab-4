@@ -72,8 +72,8 @@ public class PointBean {
         return ret;
     }
 
-    public boolean insertPoint(String params, String jwt){
-        boolean res = false;
+    public String insertPoint(String params, String jwt){
+        String res = "false";
         if(getFullParams(params, jwt)){
             System.out.println("getPointsTable got params:" + params + "; login from jwt: " + login);
             User found = userTableUtil.getUserByLogin(login);
@@ -82,7 +82,7 @@ public class PointBean {
                 DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
                 String stime = formatter.format(ldt);
                 Point newPoint = new Point( x, y, r, areaCheck(x,y,r), found.getId(), stime);
-                res = pointTableUtil.insertPoint(newPoint);
+                if(pointTableUtil.insertPoint(newPoint)) res = newPoint.isHit() ? "hit" : "nohit";
             }
         }
         return res;
