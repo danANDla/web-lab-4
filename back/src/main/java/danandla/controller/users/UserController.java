@@ -18,7 +18,7 @@ public class UserController {
 
     @POST
     @Path("/signin")
-    public Response signIn(String params){
+    public Response signIn(String params) {
         LoginResponse resp = userBean.signIn(params);
         String answer = new Gson().toJson(resp);
         return javax.ws.rs.core.Response.status(200)
@@ -27,7 +27,7 @@ public class UserController {
 
     @POST
     @Path("/signup")
-    public Response signUp(String params){
+    public Response signUp(String params) {
         LoginResponse resp = userBean.signUp(params);
         String answer = new Gson().toJson(resp);
         return javax.ws.rs.core.Response.status(200)

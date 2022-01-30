@@ -16,41 +16,39 @@ public class UserTableUtil {
         tr = em.getTransaction();
     }
 
-    public boolean insertUser(User newUser){
+    public boolean insertUser(User newUser) {
         boolean resp = false;
-        try{
+        try {
             initconnect();
             tr.begin();
             em.persist(newUser);
             tr.commit();
             em.close();
             resp = true;
-        }
-        catch (RuntimeException e){
+        } catch (RuntimeException e) {
             System.out.println("Exception was handled in the insertUser");
-            if(tr!=null && tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
+            if (tr != null && tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
         }
         return resp;
     }
 
-    public User getUserByLogin(String login){
-        try{
+    public User getUserByLogin(String login) {
+        try {
             initconnect();
             Query query = em.createQuery("select c from User c where c.login = :login", User.class);
             query.setParameter("login", login);
             User receviedUser = (User) query.getSingleResult();
             em.close();
             return receviedUser;
-        }
-        catch (RuntimeException e){
+        } catch (RuntimeException e) {
             System.out.println("Exception was handled in the getPointsTable: " + e);
-            if(tr!=null && tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
+            if (tr != null && tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
         }
         return null;
     }
 
-    public boolean updateToken( long userId, String token){
-        try{
+    public boolean updateToken(long userId, String token) {
+        try {
             initconnect();
             tr.begin();
             Query query = em.createQuery("select c from User c where c.id = :userId", User.class);
@@ -59,16 +57,11 @@ public class UserTableUtil {
             receviedUser.setToken(token);
             em.merge(receviedUser);
             tr.commit();
-//            Query query = em.createQuery("update User x set x.token = :token where x.id = :userId", User.class);
-//            query.setParameter("token", token);
-//            query.setParameter("userId", userId);
-//            query.executeUpdate();
             em.close();
             return true;
-        }
-        catch (RuntimeException e){
+        } catch (RuntimeException e) {
             System.out.println("Exception was handled in the updateToken: " + e);
-            if(tr!=null && tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
+            if (tr != null && tr.isActive()) tr.rollback(); // TODO error page (DB connect error)
             return false;
         }
     }

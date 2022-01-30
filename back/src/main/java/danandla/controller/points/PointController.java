@@ -20,7 +20,7 @@ public class PointController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/someMethod")
-    public Response firstmethod(){
+    public Response firstmethod() {
         String answer = "some answer";
         return Response.status(200)
                 .entity(answer).build();
@@ -30,7 +30,7 @@ public class PointController {
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/pointTable")
-    public Response getPointsTable(String params, @HeaderParam("Authorization") String jwt){
+    public Response getPointsTable(String params, @HeaderParam("Authorization") String jwt) {
         List<NetPoint> table = pointBean.getTable(params, jwt);
         String answer = new Gson().toJson(table);
         return Response.status(200)
@@ -41,18 +41,18 @@ public class PointController {
     @Secured
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/add")
-    public Response addPoint(String params, @HeaderParam("Authorization") String jwt){
+    public Response addPoint(String params, @HeaderParam("Authorization") String jwt) {
         System.out.println("received params: " + params);
         String res = pointBean.insertPoint(params, jwt);
         String answer = new Gson().toJson(res);
         return Response.status(200)
-               .entity(answer).build();
+                .entity(answer).build();
     }
 
     @POST
     @Secured
     @Path("/clear")
-    public Response clearPointsTable(String params, @HeaderParam("Authorization") String jwt){
+    public Response clearPointsTable(String params, @HeaderParam("Authorization") String jwt) {
         pointBean.parseParams(params);
         boolean answer = pointBean.clearTable(params, jwt);
         return Response.status(200)
@@ -61,7 +61,7 @@ public class PointController {
 
     @POST
     @Path("/parseParams")
-    public Response parsePointsParams(String params){
+    public Response parsePointsParams(String params) {
         pointBean.parseParams(params);
         boolean answer = true;
         return Response.status(200)

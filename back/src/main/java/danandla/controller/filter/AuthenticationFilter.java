@@ -5,6 +5,7 @@ import danandla.model.dbutils.UserTableUtil;
 import danandla.model.entities.User;
 import io.jsonwebtoken.Claims;
 
+import javax.annotation.Priority;
 import javax.ejb.EJB;
 import javax.ws.rs.Priorities;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -13,10 +14,6 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.Provider;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import javax.annotation.Priority;
 
 @Secured
 @Provider
@@ -86,11 +83,11 @@ public class AuthenticationFilter implements ContainerRequestFilter {
                 "\n issuer: " + parsed.getIssuer() +
                 "\n subject: " + parsed.getSubject());
         User found = userTableUtil.getUserByLogin(parsed.getSubject());
-        if(found == null) {
+        if (found == null) {
             System.out.println("user wasn't found");
             throw new Exception();
         }
-        if(!found.getToken().equals(token)) {
+        if (!found.getToken().equals(token)) {
             System.out.println("tokens are not equal");
             throw new Exception();
         }
@@ -101,7 +98,7 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
         long nowMillis = System.currentTimeMillis();
         long expMillis = parsed.getExpiration().getTime();
-        if(expMillis < nowMillis){
+        if (expMillis < nowMillis) {
             System.out.println("time expired");
             throw new Exception();
         }

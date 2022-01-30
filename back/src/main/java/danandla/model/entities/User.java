@@ -8,14 +8,14 @@ import java.util.Arrays;
 @Table(name = "userstable")
 public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy=GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private long id;
 
     @Column(name = "Login")
     private String login;
 
     @Column(name = "Password")
-    private byte [] password;
+    private byte[] password;
 
     @Column(name = "Salt")
     private byte[] salt;
@@ -39,7 +39,8 @@ public class User implements Serializable {
         return id;
     }
 
-    public User(){}
+    public User() {
+    }
 
     public String getToken() {
         return token;
